@@ -8,10 +8,51 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import PeopleImg from '../assets/images/people.webp'
 import Footer from '../components/Footer'
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 
 const NavBar = dynamic(() => import('../components/NavBar'), { ssr: false })
 
-const Home: NextPage = () => {
+type Data = {
+    form: { 
+         id: number,
+         user_id: number,
+         email: string,
+         fantasy_name: string,
+         theme: string,
+         action_buttons: string,
+         number_contact: string,
+         head_line: string,
+         business_description: string,
+         video_link?: string,
+         featured_product: string,
+         //main_products: ,
+         instagram_link?: string,
+         linkedin_link?: string,
+         facebook_link?: string,
+         //payment_methods: ,
+         address: string,
+         cnpj?: string,
+         //created_at:,
+         //updated_at: ,
+         logo: string,
+         main_image: string,
+         image_footer: string,
+         subdomain: string,
+     }
+ };
+ 
+ export const getServerSideProps: GetServerSideProps<{ data: Data; }> = async () => {
+     const res = await fetch('http://127.0.0.1:8000/api/form/102');
+     const data = await res.json();
+     
+     return { 
+         props: { 
+             data
+         } 
+     };
+ };
+
+const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const [navbar, setNavbar] = useState(false)
     const [isContainerOne, setIsContainerOne] = useState(false)
     const [isContainerDiff, setIsContainerDiff] = useState(false)
