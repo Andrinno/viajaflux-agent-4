@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
@@ -14,30 +15,30 @@ const NavBar = dynamic(() => import('../components/NavBar'), { ssr: false })
 
 type Data = {
     form: { 
-         id: number,
-         user_id: number,
-         email: string,
+         //id: number,
+         //user_id: number,
+         //email: string,
          fantasy_name: string,
-         theme: string,
+         //theme: string,
          action_buttons: string,
-         number_contact: string,
+         //number_contact: string,
          head_line: string,
          business_description: string,
-         video_link?: string,
+         //video_link?: string,
          featured_product: string,
-         //main_products: ,
-         instagram_link?: string,
-         linkedin_link?: string,
-         facebook_link?: string,
+         main_products: Array<string>,
+         //instagram_link?: string,
+         //linkedin_link?: string,
+         //facebook_link?: string,
          //payment_methods: ,
-         address: string,
-         cnpj?: string,
+         //address: string,
+         //cnpj?: string,
          //created_at:,
          //updated_at: ,
-         logo: string,
-         main_image: string,
-         image_footer: string,
-         subdomain: string,
+         //logo: string,
+         //main_image: string,
+         //image_footer: string,
+         //subdomain: string,
      }
  };
  
@@ -132,8 +133,7 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                                     (isContainerOne ? 'ml-0' : '-ml-[1500px]')
                                 }
                             >
-                                Headline: Lorem ipsum dolor sit amet, consnid
-                                est laborum.
+                                {data.form.head_line}
                             </h1>
                         </div>
 
@@ -156,7 +156,7 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                                 (isContainerOne ? 'ml-0' : '-ml-[1500px]')
                             }
                         >
-                            Falar com um agente
+                            {data.form.action_buttons}
                         </Link>
                     </div>
                     <div className="flex justify-center items-center bg-gray-500 rounded-xl">
@@ -176,10 +176,10 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                 className="flex py-14 px-8 flex-col text-center justify-center items-center bg-base-100"
             >
                 <h2 className="text-4xl text-primary font-semibold mb-2">
-                    Conheça a [Nome Fantasia da agência]
+                    Conheça a {data.form.fantasy_name}
                 </h2>
                 <span className="text-black">
-                    Espaço para descrição: Lorem ipsum dolor sit amet.
+                    {data.form.business_description}
                 </span>
                 <div className="w-full flex justify-center mx-auto mt-10 px-4">
                     <div className="max-w-4xl w-full flex mx-auto">
@@ -200,7 +200,7 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                     target={'_blank'}
                     className="btn btn-primary mt-10 text-base-100 normal-case w-64 no-underline"
                 >
-                    Falar com um agente
+                    {data.form.action_buttons}
                 </Link>
             </div>
 
@@ -268,16 +268,16 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
 
                     <div className="grid grid-cols-2 gap-6 mt-8">
                         <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
+                            {data.form.main_products[0]}
                         </div>
                         <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
+                            {data.form.main_products[1]}
                         </div>
                         <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
+                            {data.form.main_products[2]}
                         </div>
                         <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
+                            {data.form.main_products[3]}
                         </div>
                         <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
                             Produto
@@ -299,7 +299,7 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                         />
                     </div>
                     <h3 className="text-2xl text-primary font-semibold my-4">
-                        Título do produto em destaque aqui
+                        {data.form.featured_product}
                     </h3>
                     <p className="text-justify">
                         Nemo enim ipsam voluptatem quia voluptas sit aspernatur
