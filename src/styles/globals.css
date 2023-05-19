@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+   scroll-behavior: smooth;
+}
+
+body {
+   font-family: 'Poppins', sans-serif;
+}
+
+.title {
+   @apply leading-tight text-5xl;
+}
+
+.subtitle {
+   @apply leading-tight text-4xl;
+}
