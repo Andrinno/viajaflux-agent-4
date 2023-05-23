@@ -35,7 +35,7 @@ type Data = {
          //cnpj?: string,
          //created_at:,
          //updated_at: ,
-         //logo: string,
+         logo: string,
          //main_image: string,
          //image_footer: string,
          //subdomain: string,
@@ -108,7 +108,7 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
             passive: true,
         })
     }, [])
-
+    
     return (
         <>
             <Head>
@@ -122,7 +122,7 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                     }
                 />
             </Head>
-            <NavBar onColor={navbar} />
+            <NavBar onColor={navbar} logo={data.form.logo} action_buttons={data.form.action_buttons}/>
             <div id="home" className="bg-base-200">
                 <div className="grid md:grid-cols-2 gap-12 place-items-center md:h-screen justify-between max-w-7xl mx-auto px-8 pt-28 pb-20">
                     <div ref={boxRef} className="flex flex-col gap-12 max-w-xl">

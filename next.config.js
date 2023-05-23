@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /** @type {import("next").NextConfig} */
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -17,4 +18,12 @@ const nextConfig = withPWA({
     productionBrowserSourceMaps: true,
 })
 
-module.exports = nextConfig
+module.exports = { 
+    images: { 
+        domains: [
+            '127.0.0.1',
+            'localhost',
+            'viajaflux.com.br',
+        ], 
+    }
+}

@@ -1,9 +1,17 @@
+/* eslint-disable prettier/prettier */
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 
-const NavBar = ({ onColor }: { onColor: boolean }) => {
+interface INavBar {
+    onColor: boolean,
+    logo: string,   
+    action_buttons: string,
+}
+
+const NavBar = ( props : INavBar) => {
     const [openDrawer, setOpenDrawer] = useState(false)
 
     const toggleDrawer = () => {
@@ -14,22 +22,21 @@ const NavBar = ({ onColor }: { onColor: boolean }) => {
             <div
                 className={
                     'navbar p-0 fixed w-full text-primary z-50 transition-all duration-200 ' +
-                    (!onColor ? 'bg-transparent' : 'bg-gray-100 shadow')
+                    (!props.onColor ? 'bg-transparent' : 'bg-gray-100 shadow')
                 }
             >
                 <div className="w-full max-w-7xl mx-auto px-4 py-4">
                     <div className="navbar-start">
                         <a href="#home">
-                            <h1 className="font-bold">Logo ou Nome</h1>
-                            {/* <Image
-                                src={LogoImg}
+                            <Image
+                                src={props.logo}
                                 width={200}
                                 height={45}
                                 alt="logo"
                                 // loading="lazy"
                                 priority={true}
                                 className="cursor-pointer w-24 md:w-24"
-                            /> */}
+                            />
                         </a>
                     </div>
                     <div className="navbar-center hidden lg:flex">
@@ -65,7 +72,7 @@ const NavBar = ({ onColor }: { onColor: boolean }) => {
                             href={`${process.env.NEXT_PUBLIC_URL}/register`}
                             className="btn btn-primary normal-case text-base-100 hidden md:inline-flex"
                         >
-                            Falar com um agente
+                            {props.action_buttons}
                         </Link>
                         <button
                             aria-label="menu"
@@ -75,7 +82,7 @@ const NavBar = ({ onColor }: { onColor: boolean }) => {
                             <svg
                                 className={
                                     'swap-off fill-current ' +
-                                    (!onColor ? 'text-primary' : 'text-primary')
+                                    (!props.onColor ? 'text-primary' : 'text-primary')
                                 }
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="32"
