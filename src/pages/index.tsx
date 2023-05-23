@@ -36,7 +36,7 @@ type Data = {
          //created_at:,
          //updated_at: ,
          logo: string,
-         //main_image: string,
+         main_image: string,
          //image_footer: string,
          //subdomain: string,
      }
@@ -143,10 +143,7 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                                 (isContainerOne ? 'ml-0' : '-ml-[1500px]')
                             }
                         >
-                            Espaço para descrição: Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua
-                            sdffdbvfbs.
+                            {data.form.business_description}
                         </p>
 
                         <Link
@@ -161,7 +158,7 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                     </div>
                     <div className="flex justify-center items-center bg-gray-500 rounded-xl">
                         <Image
-                            src={PeopleImg}
+                            src={data.form.main_image}
                             quality={100}
                             width={600}
                             height={600}
@@ -204,67 +201,11 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                 </Link>
             </div>
 
-            <div ref={boxRefDiff} id="promocional" className="bg-base-200">
-                <div className="w-full flex flex-col sm:flex-row place-items-center gap-20 max-w-7xl mx-auto px-8 py-8">
-                    <div className="w-full sm:w-6/12">
-                        <h2 className="text-4xl text-primary font-semibold mb-4">
-                            Promocional banner 1
-                        </h2>
-                        <p className="text-justify">
-                            Nemo enim ipsam voluptatem quia voluptas sit
-                            aspernatur aut odit aut fugit, sed quia consequuntur
-                            magni dolores eos qui ratione voluptatem sequi
-                            nesciunt. Neque porro quisquam est, qui dolorem.
-                        </p>
-                    </div>
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl">
-                        <Image
-                            src={PeopleImg}
-                            quality={100}
-                            width={600}
-                            height={600}
-                            alt="banner"
-                            className="max-h-[300px] object-contain"
-                        />
-                    </div>
-                </div>
-
-                <div className="w-full flex flex-col sm:flex-row md:flex-row-reverse place-items-center gap-20 max-w-7xl mx-auto px-8 py-8">
-                    <div className="w-full sm:w-6/12">
-                        <h2 className="text-4xl text-primary font-semibold mb-4">
-                            Promocional banner 2
-                        </h2>
-                        <p className="text-justify">
-                            Nemo enim ipsam voluptatem quia voluptas sit
-                            aspernatur aut odit aut fugit, sed quia consequuntur
-                            magni dolores eos qui ratione voluptatem sequi
-                            nesciunt. Neque porro quisquam est, qui dolorem.
-                        </p>
-                    </div>
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl">
-                        <Image
-                            src={PeopleImg}
-                            quality={100}
-                            width={600}
-                            height={600}
-                            alt="banner"
-                            className="max-h-[300px] object-contain"
-                        />
-                    </div>
-                </div>
-            </div>
-
             <div className="w-full flex flex-col sm:flex-row gap-20 max-w-7xl mx-auto px-8 py-24 bg-white">
                 <div className="w-full sm:w-6/12">
                     <h2 className="text-4xl text-primary font-semibold mb-4">
                         Produtos selecionados pelo agente para aparecer na tela.
                     </h2>
-                    <p className="text-justify">
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-                        aut odit aut fugit, sed quia consequuntur magni dolores
-                        eos qui ratione voluptatem sequi nesciunt. Neque porro
-                        quisquam est, qui dolorem.
-                    </p>
 
                     <div className="grid grid-cols-2 gap-6 mt-8">
                         <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
@@ -278,12 +219,6 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                         </div>
                         <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
                             {data.form.main_products[3]}
-                        </div>
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
-                        </div>
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
                         </div>
                     </div>
                 </div>
