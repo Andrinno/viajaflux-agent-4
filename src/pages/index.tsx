@@ -223,25 +223,9 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                     </div>
                 </div>
                 <div className="w-full sm:w-6/12">
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl">
-                        <Image
-                            src={PeopleImg}
-                            quality={100}
-                            width={600}
-                            height={600}
-                            alt="banner"
-                            className="max-h-[300px] object-contain"
-                        />
-                    </div>
                     <h3 className="text-2xl text-primary font-semibold my-4">
                         {data.form.featured_product}
                     </h3>
-                    <p className="text-justify">
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-                        aut odit aut fugit, sed quia consequuntur magni dolores
-                        eos qui ratione voluptatem sequi nesciunt. Neque porro
-                        quisquam est, qui dolorem ipsum quia dolor sit amet.
-                    </p>
                 </div>
             </div>
 
