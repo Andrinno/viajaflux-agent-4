@@ -26,13 +26,12 @@ interface IFooter {
 const Footer = ( props : IFooter) => {
     return (
         <>
-            <div className="flex w-full relative justify-center my-14">
+            <div className="relative px-4 my-14 max-w-7xl mx-auto py-16">
                 <Image 
                     alt="Imagem do rodapé" 
                     loading="lazy" 
-                    width={1250} 
-                    height={200} 
-                    className="rounded-3xl h-52" 
+                    fill
+                    className="rounded-3xl object-cover border-2" 
                     src={props.image_footer}    
                 />
             </div>
