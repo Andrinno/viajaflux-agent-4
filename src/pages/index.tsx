@@ -37,7 +37,7 @@ type Data = {
          //updated_at: ,
          logo: string,
          main_image: string,
-         //image_footer: string,
+         image_footer: string,
          //subdomain: string,
      }
  };
@@ -237,6 +237,7 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                 fantasy_name={data.form.fantasy_name}
                 address={data.form.address}
                 cnpj={data.form.cnpj}
+                image_footer={data.form.image_footer}
             />
         </>
     )
