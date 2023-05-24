@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
 import {
     faFacebook,
     faInstagram,
+    faLinkedinIn,
     faYoutube,
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,7 +12,17 @@ import Cadastur from '../../assets/images/logo-cadastur.webp'
 import Clouflare from '../../assets/images/logo-cloudflare.webp'
 import SSL from '../../assets/images/logo-ssl.webp'
 
-const Footer = () => {
+interface IFooter {
+    instagram_link?: string,
+    facebook_link?: string,
+    linkedin_link?: string,
+    video_link?: string,
+    fantasy_name: string,
+    address: string,
+    cnpj?: string,
+}
+
+const Footer = ( props : IFooter) => {
     return (
         <div className="bg-base-200 w-full">
             <footer className="footer py-10 max-w-7xl flex flex-wrap justify-between mx-auto text-base-content px-8">
@@ -38,7 +50,7 @@ const Footer = () => {
                     <ul className="flex w-full flex-col gap-4 text-primary text-base">
                         <li>
                             <Link
-                                href="#"
+                                href={props.instagram_link}
                                 className="active:text-warning no-underline"
                                 target={'_blank'}
                             >
@@ -51,7 +63,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <Link
-                                href="#"
+                                href={props.facebook_link}
                                 className="active:text-warning no-underline"
                                 target={'_blank'}
                             >
@@ -64,7 +76,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <Link
-                                href="#"
+                                href={props.video_link}
                                 className="active:text-warning no-underline"
                                 target={'_blank'}
                             >
@@ -73,6 +85,19 @@ const Footer = () => {
                                     className="w-4 h-4 mr-2"
                                 />
                                 Youtube
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href={props.linkedin_link}
+                                className="active:text-warning no-underline"
+                                target={'_blank'}
+                            >
+                                <FontAwesomeIcon
+                                    icon={faLinkedinIn}
+                                    className="w-4 h-4 mr-2"
+                                />
+                                LinkedIn
                             </Link>
                         </li>
                     </ul>
@@ -88,7 +113,13 @@ const Footer = () => {
             </footer>
             <div className="text-center w-full pb-6 text-xs">
                 <p>
-                    {new Date().getFullYear()} - Nome da Empresa® | Todos os
+                    Endereço - {props.address}
+                </p>
+                <p className={(props.cnpj ? '' : "hidden ...")}>
+                    CNPJ - {props.cnpj}
+                </p>
+                <p>
+                    {new Date().getFullYear()} - {props.fantasy_name}® | Todos os
                     direitos reservados
                 </p>
             </div>

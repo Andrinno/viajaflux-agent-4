@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
@@ -7,7 +8,6 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-daisyui'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
-import PeopleImg from '../assets/images/people.webp'
 import Footer from '../components/Footer'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 
@@ -24,15 +24,15 @@ type Data = {
          //number_contact: string,
          head_line: string,
          business_description: string,
-         //video_link?: string,
+         video_link?: string,
          featured_product: string,
          main_products: Array<string>,
-         //instagram_link?: string,
-         //linkedin_link?: string,
-         //facebook_link?: string,
+         instagram_link?: string,
+         linkedin_link?: string,
+         facebook_link?: string,
          //payment_methods: ,
-         //address: string,
-         //cnpj?: string,
+         address: string,
+         cnpj?: string,
          //created_at:,
          //updated_at: ,
          logo: string,
@@ -229,7 +229,15 @@ const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerS
                 </div>
             </div>
 
-            <Footer />
+            <Footer 
+                instagram_link={data.form.instagram_link}
+                facebook_link={data.form.facebook_link}
+                linkedin_link={data.form.linkedin_link}
+                video_link={data.form.video_link}
+                fantasy_name={data.form.fantasy_name}
+                address={data.form.address}
+                cnpj={data.form.cnpj}
+            />
         </>
     )
 }
