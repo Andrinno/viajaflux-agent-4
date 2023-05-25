@@ -31,7 +31,7 @@ const Footer = ( props : IFooter) => {
                     alt="Imagem do rodapé" 
                     loading="lazy" 
                     fill
-                    className="rounded-3xl object-cover border-2" 
+                    className="rounded-3xl object-cover" 
                     src={props.image_footer}    
                 />
             </div>

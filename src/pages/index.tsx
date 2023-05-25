@@ -42,18 +42,32 @@ type Data = {
      }
  };
  
- export const getServerSideProps: GetServerSideProps<{ data: Data; }> = async () => {
-     const res = await fetch('http://127.0.0.1:8000/api/form/102');
-     const data = await res.json();
-     
-     return { 
-         props: { 
-             data
-         } 
-     };
+ export const getServerSideProps: GetServerSideProps<{ data: Data }> = async () => {
+    if(process.env.NEXT_PUBLIC_API) {
+        const res = await fetch(process.env.NEXT_PUBLIC_API);
+        const data = await res.json();
+        
+        return { 
+            props: { 
+               data
+            } 
+       };
+    } else {
+        const data = null;
+        return { 
+            props: { 
+                data
+            },
+            redirect: {
+                destination: 'https://www.viajaflux.com.br',
+                permanent: false,
+            },
+        };
+    }
+   
  };
 
-const Home: NextPage = ({ data, }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const [navbar, setNavbar] = useState(false)
     const [isContainerOne, setIsContainerOne] = useState(false)
     const [isContainerDiff, setIsContainerDiff] = useState(false)

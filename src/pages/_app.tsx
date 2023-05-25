@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Theme } from 'react-daisyui'
