@@ -21,6 +21,7 @@ interface IFooter {
     address: string,
     cnpj?: string,
     image_footer: string,
+    payment_methods: Array<string>,
 }
 
 const Footer = ( props : IFooter) => {
@@ -53,6 +54,36 @@ const Footer = ( props : IFooter) => {
                                 <a className="active:text-warning" href="#">
                                     Contato
                                 </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="flex flex-col gap-3 items-center">
+                        <ul className="flex w-full flex-col gap-4 text-primary text-base">
+                            <li>
+                                <div>
+                                    {props.payment_methods[0]}
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    {props.payment_methods[1]}
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    {props.payment_methods[2]}
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    {props.payment_methods[3]}
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    {props.payment_methods[4]}
+                                </div>
                             </li>
                         </ul>
                     </div>

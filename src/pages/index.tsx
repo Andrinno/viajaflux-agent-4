@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import type { NextPage } from 'next'
@@ -30,7 +31,7 @@ type Data = {
          instagram_link?: string,
          linkedin_link?: string,
          facebook_link?: string,
-         //payment_methods: ,
+         payment_methods: Array<string>,
          address: string,
          cnpj?: string,
          //created_at:,
@@ -252,6 +253,7 @@ const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
                 address={data.form.address}
                 cnpj={data.form.cnpj}
                 image_footer={data.form.image_footer}
+                payment_methods={data.form.payment_methods}
             />
         </>
     )
