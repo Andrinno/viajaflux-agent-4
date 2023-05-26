@@ -6,9 +6,9 @@ import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 
 interface INavBar {
-    onColor: boolean,
-    logo: string,   
-    action_buttons: string,
+    onColor        : boolean,
+    logo           : string,   
+    action_buttons : string,
 }
 
 const NavBar = ( props : INavBar) => {

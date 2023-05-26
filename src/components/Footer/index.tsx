@@ -13,15 +13,15 @@ import Clouflare from '../../assets/images/logo-cloudflare.webp'
 import SSL from '../../assets/images/logo-ssl.webp'
 
 interface IFooter {
-    instagram_link?: string,
-    facebook_link?: string,
-    linkedin_link?: string,
-    video_link?: string,
-    fantasy_name: string,
-    address: string,
-    cnpj?: string,
-    image_footer: string,
-    payment_methods: Array<string>,
+    instagram_link? : string,
+    facebook_link?  : string,
+    linkedin_link?  : string,
+    video_link?     : string,
+    fantasy_name    : string,
+    address         : string,
+    cnpj?           : string,
+    image_footer    : string,
+    payment_methods : Array<string>,
 }
 
 const Footer = ( props : IFooter) => {
