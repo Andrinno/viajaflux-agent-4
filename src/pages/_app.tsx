@@ -15,9 +15,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get(process.env.NEXT_PUBLIC_API);
-            const data = response.data;
-            setTheme(data.form.theme);
+              if(process.env.NEXT_PUBLIC_API) {
+              const response = await axios.get(process.env.NEXT_PUBLIC_API);
+              const data = response.data;
+              setTheme(data.form.theme);
+            }
           } catch (error) {
             console.log(error);
           }

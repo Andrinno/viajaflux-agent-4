@@ -4,6 +4,8 @@ import {
     faInstagram,
     faLinkedinIn,
     faYoutube,
+    faPix,
+    
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
@@ -11,6 +13,11 @@ import { Link } from 'react-daisyui'
 import Cadastur from '../../assets/images/logo-cadastur.webp'
 import Clouflare from '../../assets/images/logo-cloudflare.webp'
 import SSL from '../../assets/images/logo-ssl.webp'
+import { 
+    faCreditCard,
+    faBarcode,
+    faMoneyCheck
+} from '@fortawesome/free-solid-svg-icons'
 
 interface IFooter {
     instagram_link? : string,
@@ -60,30 +67,40 @@ const Footer = ( props : IFooter) => {
 
                     <div className="flex flex-col gap-3 items-center">
                         <ul className="flex w-full flex-col gap-4 text-primary text-base">
-                            <li>
-                                <div>
-                                    {props.payment_methods[0]}
-                                </div>
+                            <li className={(props.payment_methods[0] ? '' : "hidden ...")}>
+                                <FontAwesomeIcon
+                                    icon={faCreditCard}
+                                    className="w-4 h-4 mr-2"
+                                />
+                                {props.payment_methods[0]}
                             </li>
-                            <li>
-                                <div>
-                                    {props.payment_methods[1]}
-                                </div>
+                            <li className={(props.payment_methods[2] ? '' : "hidden ...")}>
+                                <FontAwesomeIcon
+                                    icon={faPix}
+                                    className="w-4 h-4 mr-2"
+                                />
+                                {props.payment_methods[1]}
                             </li>
-                            <li>
-                                <div>
-                                    {props.payment_methods[2]}
-                                </div>
+                            <li className={(props.payment_methods[2] ? '' : "hidden ...")}>
+                                <FontAwesomeIcon
+                                    icon={faBarcode}
+                                    className="w-4 h-4 mr-2"
+                                />
+                                {props.payment_methods[2]}
                             </li>
-                            <li>
-                                <div>
-                                    {props.payment_methods[3]}
-                                </div>
+                            <li className={(props.payment_methods[3] ? '' : "hidden ...")}>
+                                <FontAwesomeIcon
+                                    icon={faMoneyCheck}
+                                    className="w-4 h-4 mr-2"
+                                />
+                                {props.payment_methods[3]}
                             </li>
-                            <li>
-                                <div>
-                                    {props.payment_methods[4]}
-                                </div>
+                            <li className={(props.payment_methods[4] ? '' : "hidden ...")}>
+                                <FontAwesomeIcon
+                                    icon={faMoneyCheck}
+                                    className="w-4 h-4 mr-2"
+                                />
+                               {props.payment_methods[4]}
                             </li>
                         </ul>
                     </div>

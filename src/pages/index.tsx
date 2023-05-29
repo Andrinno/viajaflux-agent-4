@@ -12,6 +12,7 @@ import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import Footer from '../components/Footer'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 
+
 const NavBar = dynamic(() => import('../components/NavBar'), { ssr: false })
 
 type Data = {
@@ -38,6 +39,9 @@ type Data = {
          //subdomain         : string,
          main_products       : Array<string>,
          payment_methods     : Array<string>,
+         title_of_featured_product: string,
+         description_of_featured_product: string,
+         image_of_featured_product: string
      }
  };
  
@@ -239,6 +243,22 @@ const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
                     <h3 className="text-2xl text-primary font-semibold my-4">
                         {data.form.featured_product}
                     </h3>
+                    <p className="text-justify">
+                       {data.form.title_of_featured_product}
+                    </p>
+                    <p className="text-justify">
+                       {data.form.description_of_featured_product}
+                    </p>
+                    <div className="flex justify-center items-center bg-gray-500 rounded-xl">
+                        <Image
+                            src={data.form.image_of_featured_product}
+                            quality={100}
+                            width={600}
+                            height={600}
+                            alt="Produto em destaque"
+                            className="max-h-[300px] object-cover"
+                        />
+                    </div>
                 </div>
             </div>
 
