@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 /** @type {import("next").NextConfig} */
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -16,14 +15,14 @@ const withPWA = require('next-pwa')({
 const nextConfig = withPWA({
     reactStrictMode: true,
     productionBrowserSourceMaps: true,
-})
-
-module.exports = { 
-    images: { 
+    images: {
         domains: [
             '127.0.0.1',
             'localhost',
             'viajaflux.com.br',
-        ], 
-    }
-}
+            'viajaflux.test',
+        ],
+    },
+})
+
+module.exports = nextConfig

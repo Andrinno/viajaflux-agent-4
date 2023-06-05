@@ -1,11 +1,9 @@
-/* eslint-disable prettier/prettier */
 import {
     faFacebook,
     faInstagram,
     faLinkedinIn,
     faYoutube,
     faPix,
-    
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
@@ -13,34 +11,28 @@ import { Link } from 'react-daisyui'
 import Cadastur from '../../assets/images/logo-cadastur.webp'
 import Clouflare from '../../assets/images/logo-cloudflare.webp'
 import SSL from '../../assets/images/logo-ssl.webp'
-import { 
+import {
     faCreditCard,
     faBarcode,
-    faMoneyCheck
+    faMoneyCheck,
 } from '@fortawesome/free-solid-svg-icons'
+import { APIdata } from '../../../context/ApiContext'
+import { useContext } from 'react'
 
-interface IFooter {
-    instagram_link? : string,
-    facebook_link?  : string,
-    linkedin_link?  : string,
-    video_link?     : string,
-    fantasy_name    : string,
-    address         : string,
-    cnpj?           : string,
-    image_footer    : string,
-    payment_methods : Array<string>,
-}
+const Footer = () => {
+    const { api } = useContext(APIdata)
 
-const Footer = ( props : IFooter) => {
+    console.log(api.category)
+
     return (
         <>
             <div className="relative px-4 my-14 max-w-7xl mx-auto py-16">
-                <Image 
-                    alt="Imagem do rodapé" 
-                    loading="lazy" 
+                <Image
+                    alt="Imagem do rodapé"
+                    loading="lazy"
                     fill
-                    className="rounded-3xl object-cover" 
-                    src={props.image_footer}    
+                    className="rounded-3xl object-cover"
+                    src={api.image_footer}
                 />
             </div>
             <div className="bg-base-200 w-full">
@@ -67,41 +59,65 @@ const Footer = ( props : IFooter) => {
 
                     <div className="flex flex-col gap-3 items-center">
                         <ul className="flex w-full flex-col gap-4 text-primary text-base">
-                            <li className={(props.payment_methods[0] ? '' : "hidden ...")}>
-                                <FontAwesomeIcon
-                                    icon={faCreditCard}
-                                    className="w-4 h-4 mr-2"
-                                />
-                                {props.payment_methods[0]}
-                            </li>
-                            <li className={(props.payment_methods[2] ? '' : "hidden ...")}>
-                                <FontAwesomeIcon
-                                    icon={faPix}
-                                    className="w-4 h-4 mr-2"
-                                />
-                                {props.payment_methods[1]}
-                            </li>
-                            <li className={(props.payment_methods[2] ? '' : "hidden ...")}>
-                                <FontAwesomeIcon
-                                    icon={faBarcode}
-                                    className="w-4 h-4 mr-2"
-                                />
-                                {props.payment_methods[2]}
-                            </li>
-                            <li className={(props.payment_methods[3] ? '' : "hidden ...")}>
-                                <FontAwesomeIcon
-                                    icon={faMoneyCheck}
-                                    className="w-4 h-4 mr-2"
-                                />
-                                {props.payment_methods[3]}
-                            </li>
-                            <li className={(props.payment_methods[4] ? '' : "hidden ...")}>
-                                <FontAwesomeIcon
-                                    icon={faMoneyCheck}
-                                    className="w-4 h-4 mr-2"
-                                />
-                               {props.payment_methods[4]}
-                            </li>
+                            {api && api.payment && api.payment.length > 0 && (
+                                <>
+                                    <li
+                                        className={
+                                            api.payment[0] ? '' : 'hidden ...'
+                                        }
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faCreditCard}
+                                            className="w-4 h-4 mr-2"
+                                        />
+                                        {api.payment[0]}
+                                    </li>
+                                    <li
+                                        className={
+                                            api.payment[1] ? '' : 'hidden ...'
+                                        }
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faPix}
+                                            className="w-4 h-4 mr-2"
+                                        />
+                                        {api.payment[1]}
+                                    </li>
+                                    <li
+                                        className={
+                                            api.payment[2] ? '' : 'hidden ...'
+                                        }
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faBarcode}
+                                            className="w-4 h-4 mr-2"
+                                        />
+                                        {api.payment[2]}
+                                    </li>
+                                    <li
+                                        className={
+                                            api.payment[3] ? '' : 'hidden ...'
+                                        }
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faMoneyCheck}
+                                            className="w-4 h-4 mr-2"
+                                        />
+                                        {api.payment[3]}
+                                    </li>
+                                    <li
+                                        className={
+                                            api.payment[4] ? '' : 'hidden ...'
+                                        }
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faMoneyCheck}
+                                            className="w-4 h-4 mr-2"
+                                        />
+                                        {api.payment[4]}
+                                    </li>
+                                </>
+                            )}
                         </ul>
                     </div>
 
@@ -109,7 +125,7 @@ const Footer = ( props : IFooter) => {
                         <ul className="flex w-full flex-col gap-4 text-primary text-base">
                             <li>
                                 <Link
-                                    href={props.instagram_link}
+                                    href={api.instagram}
                                     className="active:text-warning no-underline"
                                     target={'_blank'}
                                 >
@@ -122,7 +138,7 @@ const Footer = ( props : IFooter) => {
                             </li>
                             <li>
                                 <Link
-                                    href={props.facebook_link}
+                                    href={api.facebook}
                                     className="active:text-warning no-underline"
                                     target={'_blank'}
                                 >
@@ -135,7 +151,7 @@ const Footer = ( props : IFooter) => {
                             </li>
                             <li>
                                 <Link
-                                    href={props.video_link}
+                                    href={api.video}
                                     className="active:text-warning no-underline"
                                     target={'_blank'}
                                 >
@@ -148,7 +164,7 @@ const Footer = ( props : IFooter) => {
                             </li>
                             <li>
                                 <Link
-                                    href={props.linkedin_link}
+                                    href={api.linkedin}
                                     className="active:text-warning no-underline"
                                     target={'_blank'}
                                 >
@@ -163,22 +179,30 @@ const Footer = ( props : IFooter) => {
                     </div>
 
                     <div className="flex items-center md:flex-col md:items-end gap-4 w-full md:w-auto justify-center">
-                        <Image src={Cadastur} width={130} height={65} alt="logo" />
+                        <Image
+                            src={Cadastur}
+                            width={130}
+                            height={65}
+                            alt="logo"
+                        />
 
-                        <Image src={Clouflare} width={100} height={65} alt="logo" />
+                        <Image
+                            src={Clouflare}
+                            width={100}
+                            height={65}
+                            alt="logo"
+                        />
 
                         <Image src={SSL} width={80} height={65} alt="logo" />
                     </div>
                 </footer>
                 <div className="text-center w-full pb-6 text-xs">
-                    <p>
-                        Endereço - {props.address}
-                    </p>
-                    <p className={(props.cnpj ? '' : "hidden ...")}>
-                        CNPJ - {props.cnpj}
+                    <p>Endereço - {api.address}</p>
+                    <p className={api.cnpj ? '' : 'hidden ...'}>
+                        CNPJ - {api.cnpj}
                     </p>
                     <p>
-                        {new Date().getFullYear()} - {props.fantasy_name}® | Todos os
+                        {new Date().getFullYear()} - {api.company}® | Todos os
                         direitos reservados
                     </p>
                 </div>

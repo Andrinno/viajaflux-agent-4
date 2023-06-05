@@ -1,39 +1,21 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Theme } from 'react-daisyui'
-
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import ThemeContext from '../../context/ThemeContext';
+import { Theme, useTheme } from 'react-daisyui'
+import ApiContext, { APIdata } from '../../context/ApiContext'
+import { useContext } from 'react'
 
 function MyApp({ Component, pageProps }: AppProps) {
-    const [theme, setTheme] = useState('');
+    const { theme, setTheme } = useTheme('light')
+    const { api } = useContext(APIdata)
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-              if(process.env.NEXT_PUBLIC_API) {
-              const response = await axios.get(process.env.NEXT_PUBLIC_API);
-              const data = response.data;
-              setTheme(data.form.theme);
-            }
-          } catch (error) {
-            console.log(error);
-          }
-        };
-    
-        fetchData();
-    }, []);
+    setTheme(api?.theme)
 
     return (
-        <ThemeContext.Provider value={theme}>
+        <ApiContext>
             <Theme dataTheme={theme}>
                 <Component {...pageProps} />
             </Theme>
-        </ThemeContext.Provider>
+        </ApiContext>
     )
 }
 

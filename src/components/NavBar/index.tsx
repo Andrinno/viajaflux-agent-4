@@ -6,12 +6,12 @@ import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 
 interface INavBar {
-    onColor        : boolean,
-    logo           : string,   
-    action_buttons : string,
+    onColor: boolean
+    logo: string
+    action_buttons: string
 }
 
-const NavBar = ( props : INavBar) => {
+const NavBar = (props: INavBar) => {
     const [openDrawer, setOpenDrawer] = useState(false)
 
     const toggleDrawer = () => {
@@ -22,7 +22,9 @@ const NavBar = ( props : INavBar) => {
             <div
                 className={
                     'navbar p-0 fixed w-full text-primary z-50 transition-all duration-200 ' +
-                    (!props.onColor ? 'bg-transparent' : 'bg-gray-100 shadow')
+                    (!props.onColor
+                        ? 'bg-transparent'
+                        : 'bg-base-100 shadow glass')
                 }
             >
                 <div className="w-full max-w-7xl mx-auto px-4 py-4">
@@ -60,7 +62,7 @@ const NavBar = ( props : INavBar) => {
                             <li>
                                 <a
                                     className="active:text-warning"
-                                    href="#vender-milhas"
+                                    href="/#vender-milhas"
                                 >
                                     Contato
                                 </a>
@@ -70,7 +72,7 @@ const NavBar = ( props : INavBar) => {
                     <div className="navbar-end flex gap-3">
                         <Link
                             href={`${process.env.NEXT_PUBLIC_URL}/register`}
-                            className="btn btn-primary normal-case text-base-100 hidden md:inline-flex"
+                            className="btn btn-primary normal-case hidden md:inline-flex"
                         >
                             {props.action_buttons}
                         </Link>
@@ -82,7 +84,9 @@ const NavBar = ( props : INavBar) => {
                             <svg
                                 className={
                                     'swap-off fill-current ' +
-                                    (!props.onColor ? 'text-primary' : 'text-primary')
+                                    (!props.onColor
+                                        ? 'text-primary'
+                                        : 'text-primary')
                                 }
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="32"
@@ -123,10 +127,7 @@ const NavBar = ( props : INavBar) => {
                         </Link>
                     </li>
 
-                    <Link
-                        href="#"
-                        className="btn btn-primary normal-case text-base-100"
-                    >
+                    <Link href="#" className="btn btn-primary normal-case">
                         Falar com um agente
                     </Link>
                 </ul>

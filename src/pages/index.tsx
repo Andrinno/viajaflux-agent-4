@@ -1,76 +1,49 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
-import type { NextPage } from 'next'
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-daisyui'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import Footer from '../components/Footer'
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-
+import { IData } from '../@types/api'
+import { APIdata } from '../../context/ApiContext'
+// import Footer from "../components/Footer";
 
 const NavBar = dynamic(() => import('../components/NavBar'), { ssr: false })
 
-type Data = {
-    form: { 
-         //id                : number,
-         //user_id           : number,
-         //email             : string,
-         fantasy_name        : string,
-         theme               : string,
-         action_buttons      : string,
-         //number_contact    : string,
-         head_line           : string,
-         business_description: string,
-         video_link?         : string,
-         featured_product    : string,
-         instagram_link?     : string,
-         linkedin_link?      : string,
-         facebook_link?      : string,
-         address             : string,
-         cnpj?               : string,
-         logo                : string,
-         main_image          : string,
-         image_footer        : string,
-         //subdomain         : string,
-         main_products       : Array<string>,
-         payment_methods     : Array<string>,
-         title_of_featured_product: string,
-         description_of_featured_product: string,
-         image_of_featured_product: string
-     }
- };
- 
- export const getServerSideProps: GetServerSideProps<{ data: Data }> = async () => {
-    if(process.env.NEXT_PUBLIC_API) {
-        const res = await fetch(process.env.NEXT_PUBLIC_API);
-        const data = await res.json();
-        
-        return { 
-            props: { 
-               data
-            } 
-       };
+export const getServerSideProps: GetServerSideProps<{
+    data: IData
+}> = async () => {
+    if (process.env.NEXT_PUBLIC_API) {
+        const res = await fetch(process.env.NEXT_PUBLIC_API)
+        const data = await res.json()
+        return {
+            props: {
+                data: data.data,
+            },
+        }
     } else {
-        const data = null;
-        return { 
-            props: { 
-                data
+        const data = null
+        return {
+            props: {
+                data,
             },
             redirect: {
                 destination: 'https://www.viajaflux.com.br',
                 permanent: false,
             },
-        };
+        }
     }
-   
- };
+}
 
-const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home = ({
+    data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    const { api, setApi } = useContext(APIdata)
+    setApi(data)
+
     const [navbar, setNavbar] = useState(false)
     const [isContainerOne, setIsContainerOne] = useState(false)
     const [isContainerDiff, setIsContainerDiff] = useState(false)
@@ -125,11 +98,11 @@ const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
             passive: true,
         })
     }, [])
-    
+
     return (
         <>
             <Head>
-                <title>ViajaFlux</title>
+                <title>{api.company} - ViajaFlux</title>
                 <meta
                     name={'description'}
                     content={
@@ -139,7 +112,9 @@ const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
                     }
                 />
             </Head>
-            <NavBar onColor={navbar} logo={data.form.logo} action_buttons={data.form.action_buttons}/>
+
+            <NavBar onColor={navbar} logo={api.logo} action_buttons={api.cta} />
+
             <div id="home" className="bg-base-200">
                 <div className="grid md:grid-cols-2 gap-12 place-items-center md:h-screen justify-between max-w-7xl mx-auto px-8 pt-28 pb-20">
                     <div ref={boxRef} className="flex flex-col gap-12 max-w-xl">
@@ -150,32 +125,32 @@ const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
                                     (isContainerOne ? 'ml-0' : '-ml-[1500px]')
                                 }
                             >
-                                {data.form.head_line}
+                                {api.headline}
                             </h1>
                         </div>
 
                         <p
                             className={
-                                'text-base text-justify md:text-xl text-[#555555] normal-case transition-all duration-700 max-w-3xl ' +
+                                'text-base text-justify md:text-xl normal-case transition-all duration-700 max-w-3xl ' +
                                 (isContainerOne ? 'ml-0' : '-ml-[1500px]')
                             }
                         >
-                            {data.form.business_description}
+                            {api.description}
                         </p>
 
                         <Link
                             href={`${process.env.NEXT_PUBLIC_URL}/register`}
                             className={
-                                'btn btn-sm btn-primary sm:btn-lg w-fit normal-case text-base-100 no-underline transition-all duration-1000 ' +
+                                'btn btn-sm btn-primary sm:btn-lg w-fit normal-case no-underline transition-all duration-1000 ' +
                                 (isContainerOne ? 'ml-0' : '-ml-[1500px]')
                             }
                         >
-                            {data.form.action_buttons}
+                            {api.cta}
                         </Link>
                     </div>
                     <div className="flex justify-center items-center bg-gray-500 rounded-xl">
                         <Image
-                            src={data.form.main_image}
+                            src={api.main_image}
                             quality={100}
                             width={600}
                             height={600}
@@ -190,11 +165,9 @@ const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
                 className="flex py-14 px-8 flex-col text-center justify-center items-center bg-base-100"
             >
                 <h2 className="text-4xl text-primary font-semibold mb-2">
-                    Conheça a {data.form.fantasy_name}
+                    Conheça a {api.company}
                 </h2>
-                <span className="text-black">
-                    {data.form.business_description}
-                </span>
+                <span>{api.description}</span>
                 <div className="w-full flex justify-center mx-auto mt-10 px-4">
                     <div className="max-w-4xl w-full flex mx-auto">
                         <div className="w-full flex justify-center">
@@ -212,67 +185,56 @@ const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
                 <Link
                     href="#"
                     target={'_blank'}
-                    className="btn btn-primary mt-10 text-base-100 normal-case w-64 no-underline"
+                    className="btn btn-primary mt-10 normal-case w-64 no-underline"
                 >
-                    {data.form.action_buttons}
+                    {api.cta}
                 </Link>
             </div>
 
-            <div className="w-full flex flex-col sm:flex-row gap-20 max-w-7xl mx-auto px-8 py-24 bg-white">
+            <div className="w-full flex flex-col sm:flex-row gap-20 max-w-7xl mx-auto px-8 py-24">
                 <div className="w-full sm:w-6/12">
                     <h2 className="text-4xl text-primary font-semibold mb-4">
                         Produtos selecionados pelo agente para aparecer na tela.
                     </h2>
 
                     <div className="grid grid-cols-2 gap-6 mt-8">
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            {data.form.main_products[0]}
-                        </div>
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            {data.form.main_products[1]}
-                        </div>
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            {data.form.main_products[2]}
-                        </div>
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            {data.form.main_products[3]}
-                        </div>
+                        {api.category &&
+                            api.category.map(
+                                (product: string, index: number) => (
+                                    <div
+                                        key={index}
+                                        className="bg-base-200 flex items-center justify-center py-8 px-4 rounded-xl"
+                                    >
+                                        {product}
+                                    </div>
+                                )
+                            )}
                     </div>
                 </div>
                 <div className="w-full sm:w-6/12">
                     <h3 className="text-2xl text-primary font-semibold my-4">
-                        {data.form.featured_product}
+                        {api.featured}
                     </h3>
                     <p className="text-justify">
-                       {data.form.title_of_featured_product}
+                        {api.title_of_featured_product}
                     </p>
                     <p className="text-justify">
-                       {data.form.description_of_featured_product}
+                        {api.description_of_featured_product}
                     </p>
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl">
+                    <div className="relative flex justify-center items-center bg-base-200 rounded-xl">
                         <Image
-                            src={data.form.image_of_featured_product}
+                            src={api.image_of_featured_product}
                             quality={100}
                             width={600}
                             height={600}
                             alt="Produto em destaque"
-                            className="max-h-[300px] object-cover"
+                            className="max-h-[300px] object-cover border-none"
                         />
                     </div>
                 </div>
             </div>
 
-            <Footer 
-                instagram_link={data.form.instagram_link}
-                facebook_link={data.form.facebook_link}
-                linkedin_link={data.form.linkedin_link}
-                video_link={data.form.video_link}
-                fantasy_name={data.form.fantasy_name}
-                address={data.form.address}
-                cnpj={data.form.cnpj}
-                image_footer={data.form.image_footer}
-                payment_methods={data.form.payment_methods}
-            />
+            <Footer />
         </>
     )
 }
