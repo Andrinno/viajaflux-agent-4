@@ -113,7 +113,7 @@ const Home = ({
                 />
             </Head>
 
-            <NavBar onColor={navbar} logo={api.logo} action_buttons={api.cta} />
+            <NavBar onColor={navbar} logo={api.logo} action_buttons={api.cta} phone={api.phone}/>
 
             <div id="home" className="bg-base-200">
                 <div className="grid md:grid-cols-2 gap-12 place-items-center md:h-screen justify-between max-w-7xl mx-auto px-8 pt-28 pb-20">
@@ -139,7 +139,8 @@ const Home = ({
                         </p>
 
                         <Link
-                            href={`${process.env.NEXT_PUBLIC_URL}/register`}
+                            href={`https://wa.me/55${api.phone}`}
+                            target={'_blank'}
                             className={
                                 'btn btn-sm btn-primary sm:btn-lg w-fit normal-case no-underline transition-all duration-1000 ' +
                                 (isContainerOne ? 'ml-0' : '-ml-[1500px]')
@@ -183,7 +184,7 @@ const Home = ({
                     </div>
                 </div>
                 <Link
-                    href="#"
+                    href={`https://wa.me/55${api.phone}`}
                     target={'_blank'}
                     className="btn btn-primary mt-10 normal-case w-64 no-underline"
                 >
@@ -223,7 +224,7 @@ const Home = ({
                     </p>
                     <div className="relative flex justify-center items-center bg-base-200 rounded-xl">
                         <Image
-                            src={api.image_of_featured_product}
+                            src={api.image_of_fetured_product}
                             quality={100}
                             width={600}
                             height={600}

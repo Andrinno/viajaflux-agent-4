@@ -50,7 +50,11 @@ const Footer = () => {
                                 </a>
                             </li>
                             <li>
-                                <a className="active:text-warning" href="#">
+                                <a 
+                                    className="active:text-warning" 
+                                    href={`https://wa.me/55${api.phone}`}
+                                    target={'_blank'}
+                                >
                                     Contato
                                 </a>
                             </li>

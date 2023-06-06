@@ -9,6 +9,7 @@ interface INavBar {
     onColor: boolean
     logo: string
     action_buttons: string
+    phone: string
 }
 
 const NavBar = (props: INavBar) => {
@@ -62,7 +63,8 @@ const NavBar = (props: INavBar) => {
                             <li>
                                 <a
                                     className="active:text-warning"
-                                    href="/#vender-milhas"
+                                    href={`https://wa.me/55${props.phone}`}
+                                    target={'_blank'}
                                 >
                                     Contato
                                 </a>
@@ -71,7 +73,8 @@ const NavBar = (props: INavBar) => {
                     </div>
                     <div className="navbar-end flex gap-3">
                         <Link
-                            href={`${process.env.NEXT_PUBLIC_URL}/register`}
+                            href={`https://wa.me/55${props.phone}`}
+                            target={'_blank'}
                             className="btn btn-primary normal-case hidden md:inline-flex"
                         >
                             {props.action_buttons}
@@ -122,12 +125,19 @@ const NavBar = (props: INavBar) => {
                         </Link>
                     </li>
                     <li>
-                        <Link className="active:text-warning" href="#">
+                        <Link 
+                            href={`https://wa.me/55${props.phone}`}
+                            target={'_blank'}
+                            className="active:text-warning" 
+                        >
                             Contato
                         </Link>
                     </li>
 
-                    <Link href="#" className="btn btn-primary normal-case">
+                    <Link 
+                        href={`https://wa.me/55${props.phone}`}
+                        target={'_blank'}
+                        className="btn btn-primary normal-case">
                         Falar com um agente
                     </Link>
                 </ul>
