@@ -199,7 +199,6 @@ const Home = ({
                     </Link>
                 </div>
             )}
-
             <div
                 id="produtos"
                 className="w-full flex flex-col sm:flex-row gap-20 max-w-7xl mx-auto px-8 py-24"

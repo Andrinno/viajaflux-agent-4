@@ -9,8 +9,13 @@ interface INavBar {
     onColor: boolean
     logo: string
     action_buttons: string
+<<<<<<< HEAD
     phone: string
     email: string
+||||||| 9a3851a
+=======
+    phone: string
+>>>>>>> 4b63ef731b44c0ff52b1c993906c40b11f69d85b
 }
 
 const NavBar = (props: INavBar) => {
@@ -58,7 +63,14 @@ const NavBar = (props: INavBar) => {
                             <li>
                                 <a
                                     className="active:text-warning"
+<<<<<<< HEAD
                                     href="#produtos"
+||||||| 9a3851a
+                                    href="/#vender-milhas"
+=======
+                                    href={`https://wa.me/55${props.phone}`}
+                                    target={'_blank'}
+>>>>>>> 4b63ef731b44c0ff52b1c993906c40b11f69d85b
                                 >
                                     Produtos
                                 </a>
@@ -75,9 +87,16 @@ const NavBar = (props: INavBar) => {
                     </div>
                     <div className="navbar-end flex gap-3">
                         <Link
+<<<<<<< HEAD
                             target={'_blank'}
                             href={`https://wa.me/+55${props.phone}`}
                             rel={'noreferrer'}
+||||||| 9a3851a
+                            href={`${process.env.NEXT_PUBLIC_URL}/register`}
+=======
+                            href={`https://wa.me/55${props.phone}`}
+                            target={'_blank'}
+>>>>>>> 4b63ef731b44c0ff52b1c993906c40b11f69d85b
                             className="btn btn-primary normal-case hidden md:inline-flex"
                         >
                             {props.action_buttons}
@@ -127,8 +146,29 @@ const NavBar = (props: INavBar) => {
                             Quem somos
                         </Link>
                     </li>
+<<<<<<< HEAD
+||||||| 9a3851a
+                    <li>
+                        <Link className="active:text-warning" href="#">
+                            Contato
+                        </Link>
+                    </li>
+=======
+                    <li>
+                        <Link 
+                            href={`https://wa.me/55${props.phone}`}
+                            target={'_blank'}
+                            className="active:text-warning" 
+                        >
+                            Contato
+                        </Link>
+                    </li>
+>>>>>>> 4b63ef731b44c0ff52b1c993906c40b11f69d85b
 
-                    <Link href="#" className="btn btn-primary normal-case">
+                    <Link 
+                        href={`https://wa.me/55${props.phone}`}
+                        target={'_blank'}
+                        className="btn btn-primary normal-case">
                         Falar com um agente
                     </Link>
                 </ul>
