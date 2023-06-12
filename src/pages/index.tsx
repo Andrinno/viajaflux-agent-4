@@ -1,17 +1,49 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-daisyui'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
-import PeopleImg from '../assets/images/people.webp'
 import Footer from '../components/Footer'
+import { IData } from '../@types/api'
+import { APIdata } from '../../context/ApiContext'
+// import Footer from "../components/Footer";
 
 const NavBar = dynamic(() => import('../components/NavBar'), { ssr: false })
 
-const Home: NextPage = () => {
+export const getServerSideProps: GetServerSideProps<{
+    data: IData
+}> = async () => {
+    if (process.env.NEXT_PUBLIC_API) {
+        const res = await fetch(process.env.NEXT_PUBLIC_API)
+        const data = await res.json()
+        return {
+            props: {
+                data: data.data,
+            },
+        }
+    } else {
+        const data = null
+        return {
+            props: {
+                data,
+            },
+            redirect: {
+                destination: 'https://www.viajaflux.com.br',
+                permanent: false,
+            },
+        }
+    }
+}
+
+const Home = ({
+    data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    const { api, setApi } = useContext(APIdata)
+    setApi(data)
+
     const [navbar, setNavbar] = useState(false)
     const [isContainerOne, setIsContainerOne] = useState(false)
     const [isContainerDiff, setIsContainerDiff] = useState(false)
@@ -70,7 +102,7 @@ const Home: NextPage = () => {
     return (
         <>
             <Head>
-                <title>ViajaFlux</title>
+                <title>{api.company} - ViajaFlux</title>
                 <meta
                     name={'description'}
                     content={
@@ -80,9 +112,17 @@ const Home: NextPage = () => {
                     }
                 />
             </Head>
-            <NavBar onColor={navbar} />
+
+            <NavBar
+                onColor={navbar}
+                logo={api.logo}
+                action_buttons={api.cta}
+                phone={api.phone}
+                email={api.email}
+            />
+
             <div id="home" className="bg-base-200">
-                <div className="grid md:grid-cols-2 gap-12 place-items-center md:h-screen justify-between max-w-7xl mx-auto px-8 pt-28 pb-20">
+                <div className="grid md:grid-cols-2 gap-12 place-items-center justify-between container mx-auto px-8 pt-48 pb-32">
                     <div ref={boxRef} className="flex flex-col gap-12 max-w-xl">
                         <div>
                             <h1
@@ -91,187 +131,127 @@ const Home: NextPage = () => {
                                     (isContainerOne ? 'ml-0' : '-ml-[1500px]')
                                 }
                             >
-                                Headline: Lorem ipsum dolor sit amet, consnid
-                                est laborum.
+                                {api.headline}
                             </h1>
                         </div>
 
                         <p
                             className={
-                                'text-base text-justify md:text-xl text-[#555555] normal-case transition-all duration-700 max-w-3xl ' +
+                                'text-base text-justify md:text-xl normal-case transition-all duration-700 max-w-3xl ' +
                                 (isContainerOne ? 'ml-0' : '-ml-[1500px]')
                             }
                         >
-                            Espaço para descrição: Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua
-                            sdffdbvfbs.
+                            {api.description}
                         </p>
 
                         <Link
-                            href={`${process.env.NEXT_PUBLIC_URL}/register`}
+                            target={'_blank'}
+                            href={`https://wa.me/+55${api.phone}`}
+                            rel={'noreferrer'}
                             className={
-                                'btn btn-sm btn-primary sm:btn-lg w-fit normal-case text-base-100 no-underline transition-all duration-1000 ' +
+                                'btn btn-sm btn-primary sm:btn-lg w-fit normal-case no-underline transition-all duration-1000 ' +
                                 (isContainerOne ? 'ml-0' : '-ml-[1500px]')
                             }
                         >
-                            Falar com um agente
+                            {api.cta}
                         </Link>
                     </div>
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl">
+                    <div className="flex justify-center items-center bg-gray-500 rounded-xl relative w-full h-full">
                         <Image
-                            src={PeopleImg}
-                            quality={100}
-                            width={600}
-                            height={600}
+                            src={api.main_image}
+                            fill
                             alt="banner"
-                            className="max-h-[600px] object-contain"
+                            className="object-cover rounded-xl"
                         />
                     </div>
                 </div>
             </div>
-            <div
-                id="como-funciona"
-                className="flex py-14 px-8 flex-col text-center justify-center items-center bg-base-100"
-            >
-                <h2 className="text-4xl text-primary font-semibold mb-2">
-                    Conheça a [Nome Fantasia da agência]
-                </h2>
-                <span className="text-black">
-                    Espaço para descrição: Lorem ipsum dolor sit amet.
-                </span>
-                <div className="w-full flex justify-center mx-auto mt-10 px-4">
-                    <div className="max-w-4xl w-full flex mx-auto">
-                        <div className="w-full flex justify-center">
-                            <div className="w-full h-auto relative flex">
-                                <div className="relative w-full h-full rounded-xl overflow-hidden">
-                                    <LiteYouTubeEmbed
-                                        id="dWSNPFb1inY"
-                                        title="Apresentação - ViajaFlux"
-                                    />
+            {api.video && (
+                <div
+                    id="quem-somos"
+                    className="container mx-auto flex py-14 px-8 flex-col justify-center items-center bg-base-100"
+                >
+                    <h2 className="text-4xl text-primary font-semibold mb-2">
+                        Conheça {api.company}
+                    </h2>
+
+                    <div className="w-full flex justify-center mx-auto mt-10 px-4">
+                        <div className="max-w-4xl w-full flex mx-auto">
+                            <div className="w-full flex justify-center">
+                                <div className="w-full h-auto relative flex">
+                                    <div className="relative w-full h-full rounded-xl overflow-hidden">
+                                        <LiteYouTubeEmbed
+                                            id={extractVideo(api.video) ?? ''}
+                                            title="ViajaFlux"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <Link
+                        target={'_blank'}
+                        href={`https://wa.me/+55${api.phone}`}
+                        rel={'noreferrer'}
+                        className="btn btn-primary mt-10 normal-case w-64 no-underline"
+                    >
+                        {api.cta}
+                    </Link>
                 </div>
-                <Link
-                    href="#"
-                    target={'_blank'}
-                    className="btn btn-primary mt-10 text-base-100 normal-case w-64 no-underline"
-                >
-                    Falar com um agente
-                </Link>
-            </div>
-
-            <div ref={boxRefDiff} id="promocional" className="bg-base-200">
-                <div className="w-full flex flex-col sm:flex-row place-items-center gap-20 max-w-7xl mx-auto px-8 py-8">
-                    <div className="w-full sm:w-6/12">
-                        <h2 className="text-4xl text-primary font-semibold mb-4">
-                            Promocional banner 1
-                        </h2>
-                        <p className="text-justify">
-                            Nemo enim ipsam voluptatem quia voluptas sit
-                            aspernatur aut odit aut fugit, sed quia consequuntur
-                            magni dolores eos qui ratione voluptatem sequi
-                            nesciunt. Neque porro quisquam est, qui dolorem.
-                        </p>
-                    </div>
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl">
-                        <Image
-                            src={PeopleImg}
-                            quality={100}
-                            width={600}
-                            height={600}
-                            alt="banner"
-                            className="max-h-[300px] object-contain"
-                        />
-                    </div>
-                </div>
-
-                <div className="w-full flex flex-col sm:flex-row md:flex-row-reverse place-items-center gap-20 max-w-7xl mx-auto px-8 py-8">
-                    <div className="w-full sm:w-6/12">
-                        <h2 className="text-4xl text-primary font-semibold mb-4">
-                            Promocional banner 2
-                        </h2>
-                        <p className="text-justify">
-                            Nemo enim ipsam voluptatem quia voluptas sit
-                            aspernatur aut odit aut fugit, sed quia consequuntur
-                            magni dolores eos qui ratione voluptatem sequi
-                            nesciunt. Neque porro quisquam est, qui dolorem.
-                        </p>
-                    </div>
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl">
-                        <Image
-                            src={PeopleImg}
-                            quality={100}
-                            width={600}
-                            height={600}
-                            alt="banner"
-                            className="max-h-[300px] object-contain"
-                        />
-                    </div>
-                </div>
-            </div>
-
-            <div className="w-full flex flex-col sm:flex-row gap-20 max-w-7xl mx-auto px-8 py-24 bg-white">
+            )}
+            <div
+                id="produtos"
+                className="w-full flex flex-col sm:flex-row gap-20 max-w-7xl mx-auto px-8 py-24"
+            >
                 <div className="w-full sm:w-6/12">
                     <h2 className="text-4xl text-primary font-semibold mb-4">
-                        Produtos selecionados pelo agente para aparecer na tela.
+                        Produtos que você encontrará na {api.company}
                     </h2>
-                    <p className="text-justify">
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-                        aut odit aut fugit, sed quia consequuntur magni dolores
-                        eos qui ratione voluptatem sequi nesciunt. Neque porro
-                        quisquam est, qui dolorem.
-                    </p>
 
                     <div className="grid grid-cols-2 gap-6 mt-8">
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
-                        </div>
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
-                        </div>
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
-                        </div>
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
-                        </div>
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
-                        </div>
-                        <div className="bg-gray-100 flex items-center justify-center py-8 px-4 rounded-xl border">
-                            Produto
-                        </div>
+                        {api.category &&
+                            api.category.map(
+                                (product: string, index: number) => (
+                                    <div
+                                        key={index}
+                                        className="bg-base-200 flex items-center justify-center py-8 px-4 rounded-xl"
+                                    >
+                                        {product}
+                                    </div>
+                                )
+                            )}
                     </div>
                 </div>
                 <div className="w-full sm:w-6/12">
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl">
-                        <Image
-                            src={PeopleImg}
-                            quality={100}
-                            width={600}
-                            height={600}
-                            alt="banner"
-                            className="max-h-[300px] object-contain"
-                        />
-                    </div>
                     <h3 className="text-2xl text-primary font-semibold my-4">
-                        Título do produto em destaque aqui
+                        {api.title_of_featured_product}
                     </h3>
                     <p className="text-justify">
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-                        aut odit aut fugit, sed quia consequuntur magni dolores
-                        eos qui ratione voluptatem sequi nesciunt. Neque porro
-                        quisquam est, qui dolorem ipsum quia dolor sit amet.
+                        {api.description_of_featured_product}
                     </p>
+                    <div className="relative flex justify-center items-center w-full h-72 bg-base-200 rounded-xl mt-4">
+                        <Image
+                            src={api.image_of_featured_product}
+                            fill
+                            alt="Produto em destaque"
+                            className="object-cover border-none rounded-xl"
+                        />
+                    </div>
                 </div>
             </div>
 
             <Footer />
         </>
     )
+}
+
+function extractVideo(video: string) {
+    const video_id = video.split('v=')[1]
+    const ampersandPosition = video_id.indexOf('&')
+    if (ampersandPosition != -1) {
+        return video_id.substring(0, ampersandPosition)
+    }
+    return video_id
 }
 
 export default Home

@@ -15,6 +15,14 @@ const withPWA = require('next-pwa')({
 const nextConfig = withPWA({
     reactStrictMode: true,
     productionBrowserSourceMaps: true,
+    images: {
+        domains: [
+            '127.0.0.1',
+            'localhost',
+            'viajaflux.com.br',
+            'viajaflux.test',
+        ],
+    },
 })
 
 module.exports = nextConfig

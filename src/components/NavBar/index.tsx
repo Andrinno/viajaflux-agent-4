@@ -1,9 +1,19 @@
+/* eslint-disable prettier/prettier */
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 
-const NavBar = ({ onColor }: { onColor: boolean }) => {
+interface INavBar {
+    onColor: boolean
+    logo: string
+    action_buttons: string
+    phone: string
+    email: string
+}
+
+const NavBar = (props: INavBar) => {
     const [openDrawer, setOpenDrawer] = useState(false)
 
     const toggleDrawer = () => {
@@ -14,22 +24,25 @@ const NavBar = ({ onColor }: { onColor: boolean }) => {
             <div
                 className={
                     'navbar p-0 fixed w-full text-primary z-50 transition-all duration-200 ' +
-                    (!onColor ? 'bg-transparent' : 'bg-gray-100 shadow')
+                    (!props.onColor
+                        ? 'bg-transparent'
+                        : 'bg-base-100 shadow glass')
                 }
             >
                 <div className="w-full max-w-7xl mx-auto px-4 py-4">
                     <div className="navbar-start">
-                        <a href="#home">
-                            <h1 className="font-bold">Logo ou Nome</h1>
-                            {/* <Image
-                                src={LogoImg}
-                                width={200}
-                                height={45}
+                        <a
+                            href="#home"
+                            className="relative h-12 w-24 md:w-32 flex"
+                        >
+                            <Image
+                                src={props.logo}
+                                fill
                                 alt="logo"
                                 // loading="lazy"
                                 priority={true}
-                                className="cursor-pointer w-24 md:w-24"
-                            /> */}
+                                className="cursor-pointer object-contain"
+                            />
                         </a>
                     </div>
                     <div className="navbar-center hidden lg:flex">
@@ -37,15 +50,7 @@ const NavBar = ({ onColor }: { onColor: boolean }) => {
                             <li>
                                 <a
                                     className="active:text-warning"
-                                    href="#como-funciona"
-                                >
-                                    Produto
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    className="active:text-warning"
-                                    href="quem-somos"
+                                    href="#quem-somos"
                                 >
                                     Quem somos
                                 </a>
@@ -53,19 +58,29 @@ const NavBar = ({ onColor }: { onColor: boolean }) => {
                             <li>
                                 <a
                                     className="active:text-warning"
-                                    href="#vender-milhas"
+                                    href="#produtos"
                                 >
-                                    Contato
+                                    Produtos
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    className="active:text-warning"
+                                    href={`mailto:${props.email}`}
+                                >
+                                    E-mail
                                 </a>
                             </li>
                         </ul>
                     </div>
                     <div className="navbar-end flex gap-3">
                         <Link
-                            href={`${process.env.NEXT_PUBLIC_URL}/register`}
-                            className="btn btn-primary normal-case text-base-100 hidden md:inline-flex"
+                            target={'_blank'}
+                            href={`https://wa.me/+55${props.phone}`}
+                            rel={'noreferrer'}
+                            className="btn btn-primary normal-case hidden md:inline-flex"
                         >
-                            Falar com um agente
+                            {props.action_buttons}
                         </Link>
                         <button
                             aria-label="menu"
@@ -75,7 +90,9 @@ const NavBar = ({ onColor }: { onColor: boolean }) => {
                             <svg
                                 className={
                                     'swap-off fill-current ' +
-                                    (!onColor ? 'text-primary' : 'text-primary')
+                                    (!props.onColor
+                                        ? 'text-primary'
+                                        : 'text-primary')
                                 }
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="32"
@@ -98,27 +115,23 @@ const NavBar = ({ onColor }: { onColor: boolean }) => {
             >
                 <ul className="menu gap-5 w-full px-8 pt-10">
                     <li>
-                        <Link className="active:text-warning" href="#">
-                            Produto
+                        <Link className="active:text-warning" href="#produtos">
+                            Produtos
                         </Link>
                     </li>
                     <li>
                         <Link
                             className="active:text-warning"
-                            href="/quem-somos"
+                            href="#quem-somos"
                         >
                             Quem somos
                         </Link>
                     </li>
-                    <li>
-                        <Link className="active:text-warning" href="#">
-                            Contato
-                        </Link>
-                    </li>
 
                     <Link
-                        href="#"
-                        className="btn btn-primary normal-case text-base-100"
+                        href={`https://wa.me/55${props.phone}`}
+                        target={'_blank'}
+                        className="btn btn-primary normal-case"
                     >
                         Falar com um agente
                     </Link>
