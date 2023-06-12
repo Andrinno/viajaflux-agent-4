@@ -9,6 +9,8 @@ interface INavBar {
     onColor: boolean
     logo: string
     action_buttons: string
+    phone: string
+    email: string
 }
 
 const NavBar = (props: INavBar) => {
@@ -29,15 +31,17 @@ const NavBar = (props: INavBar) => {
             >
                 <div className="w-full max-w-7xl mx-auto px-4 py-4">
                     <div className="navbar-start">
-                        <a href="#home">
+                        <a
+                            href="#home"
+                            className="relative h-12 w-24 md:w-32 flex"
+                        >
                             <Image
                                 src={props.logo}
-                                width={200}
-                                height={45}
+                                fill
                                 alt="logo"
                                 // loading="lazy"
                                 priority={true}
-                                className="cursor-pointer w-24 md:w-24"
+                                className="cursor-pointer object-contain"
                             />
                         </a>
                     </div>
@@ -46,15 +50,7 @@ const NavBar = (props: INavBar) => {
                             <li>
                                 <a
                                     className="active:text-warning"
-                                    href="#como-funciona"
-                                >
-                                    Produto
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    className="active:text-warning"
-                                    href="quem-somos"
+                                    href="#quem-somos"
                                 >
                                     Quem somos
                                 </a>
@@ -62,16 +58,26 @@ const NavBar = (props: INavBar) => {
                             <li>
                                 <a
                                     className="active:text-warning"
-                                    href="/#vender-milhas"
+                                    href="#produtos"
                                 >
-                                    Contato
+                                    Produtos
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    className="active:text-warning"
+                                    href={`mailto:${props.email}`}
+                                >
+                                    E-mail
                                 </a>
                             </li>
                         </ul>
                     </div>
                     <div className="navbar-end flex gap-3">
                         <Link
-                            href={`${process.env.NEXT_PUBLIC_URL}/register`}
+                            target={'_blank'}
+                            href={`https://wa.me/+55${props.phone}`}
+                            rel={'noreferrer'}
                             className="btn btn-primary normal-case hidden md:inline-flex"
                         >
                             {props.action_buttons}
@@ -109,21 +115,16 @@ const NavBar = (props: INavBar) => {
             >
                 <ul className="menu gap-5 w-full px-8 pt-10">
                     <li>
-                        <Link className="active:text-warning" href="#">
-                            Produto
+                        <Link className="active:text-warning" href="#produtos">
+                            Produtos
                         </Link>
                     </li>
                     <li>
                         <Link
                             className="active:text-warning"
-                            href="/quem-somos"
+                            href="#quem-somos"
                         >
                             Quem somos
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="active:text-warning" href="#">
-                            Contato
                         </Link>
                     </li>
 

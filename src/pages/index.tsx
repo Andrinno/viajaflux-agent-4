@@ -113,10 +113,16 @@ const Home = ({
                 />
             </Head>
 
-            <NavBar onColor={navbar} logo={api.logo} action_buttons={api.cta} />
+            <NavBar
+                onColor={navbar}
+                logo={api.logo}
+                action_buttons={api.cta}
+                phone={api.phone}
+                email={api.email}
+            />
 
             <div id="home" className="bg-base-200">
-                <div className="grid md:grid-cols-2 gap-12 place-items-center md:h-screen justify-between max-w-7xl mx-auto px-8 pt-28 pb-20">
+                <div className="grid md:grid-cols-2 gap-12 place-items-center justify-between container mx-auto px-8 pt-48 pb-32">
                     <div ref={boxRef} className="flex flex-col gap-12 max-w-xl">
                         <div>
                             <h1
@@ -139,7 +145,9 @@ const Home = ({
                         </p>
 
                         <Link
-                            href={`${process.env.NEXT_PUBLIC_URL}/register`}
+                            target={'_blank'}
+                            href={`https://wa.me/+55${api.phone}`}
+                            rel={'noreferrer'}
                             className={
                                 'btn btn-sm btn-primary sm:btn-lg w-fit normal-case no-underline transition-all duration-1000 ' +
                                 (isContainerOne ? 'ml-0' : '-ml-[1500px]')
@@ -148,53 +156,57 @@ const Home = ({
                             {api.cta}
                         </Link>
                     </div>
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl">
+                    <div className="flex justify-center items-center bg-gray-500 rounded-xl relative w-full h-full">
                         <Image
                             src={api.main_image}
-                            quality={100}
-                            width={600}
-                            height={600}
+                            fill
                             alt="banner"
-                            className="max-h-[600px] object-contain"
+                            className="object-cover rounded-xl"
                         />
                     </div>
                 </div>
             </div>
-            <div
-                id="como-funciona"
-                className="flex py-14 px-8 flex-col text-center justify-center items-center bg-base-100"
-            >
-                <h2 className="text-4xl text-primary font-semibold mb-2">
-                    Conheça a {api.company}
-                </h2>
-                <span>{api.description}</span>
-                <div className="w-full flex justify-center mx-auto mt-10 px-4">
-                    <div className="max-w-4xl w-full flex mx-auto">
-                        <div className="w-full flex justify-center">
-                            <div className="w-full h-auto relative flex">
-                                <div className="relative w-full h-full rounded-xl overflow-hidden">
-                                    <LiteYouTubeEmbed
-                                        id="dWSNPFb1inY"
-                                        title="Apresentação - ViajaFlux"
-                                    />
+            {api.video && (
+                <div
+                    id="quem-somos"
+                    className="container mx-auto flex py-14 px-8 flex-col justify-center items-center bg-base-100"
+                >
+                    <h2 className="text-4xl text-primary font-semibold mb-2">
+                        Conheça {api.company}
+                    </h2>
+
+                    <div className="w-full flex justify-center mx-auto mt-10 px-4">
+                        <div className="max-w-4xl w-full flex mx-auto">
+                            <div className="w-full flex justify-center">
+                                <div className="w-full h-auto relative flex">
+                                    <div className="relative w-full h-full rounded-xl overflow-hidden">
+                                        <LiteYouTubeEmbed
+                                            id={extractVideo(api.video) ?? ''}
+                                            title="ViajaFlux"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <Link
+                        target={'_blank'}
+                        href={`https://wa.me/+55${api.phone}`}
+                        rel={'noreferrer'}
+                        className="btn btn-primary mt-10 normal-case w-64 no-underline"
+                    >
+                        {api.cta}
+                    </Link>
                 </div>
-                <Link
-                    href="#"
-                    target={'_blank'}
-                    className="btn btn-primary mt-10 normal-case w-64 no-underline"
-                >
-                    {api.cta}
-                </Link>
-            </div>
+            )}
 
-            <div className="w-full flex flex-col sm:flex-row gap-20 max-w-7xl mx-auto px-8 py-24">
+            <div
+                id="produtos"
+                className="w-full flex flex-col sm:flex-row gap-20 max-w-7xl mx-auto px-8 py-24"
+            >
                 <div className="w-full sm:w-6/12">
                     <h2 className="text-4xl text-primary font-semibold mb-4">
-                        Produtos selecionados pelo agente para aparecer na tela.
+                        Produtos que você encontrará na {api.company}
                     </h2>
 
                     <div className="grid grid-cols-2 gap-6 mt-8">
@@ -213,22 +225,17 @@ const Home = ({
                 </div>
                 <div className="w-full sm:w-6/12">
                     <h3 className="text-2xl text-primary font-semibold my-4">
-                        {api.featured}
-                    </h3>
-                    <p className="text-justify">
                         {api.title_of_featured_product}
-                    </p>
+                    </h3>
                     <p className="text-justify">
                         {api.description_of_featured_product}
                     </p>
-                    <div className="relative flex justify-center items-center bg-base-200 rounded-xl">
+                    <div className="relative flex justify-center items-center w-full h-72 bg-base-200 rounded-xl mt-4">
                         <Image
                             src={api.image_of_featured_product}
-                            quality={100}
-                            width={600}
-                            height={600}
+                            fill
                             alt="Produto em destaque"
-                            className="max-h-[300px] object-cover border-none"
+                            className="object-cover border-none rounded-xl"
                         />
                     </div>
                 </div>
@@ -237,6 +244,15 @@ const Home = ({
             <Footer />
         </>
     )
+}
+
+function extractVideo(video: string) {
+    const video_id = video.split('v=')[1]
+    const ampersandPosition = video_id.indexOf('&')
+    if (ampersandPosition != -1) {
+        return video_id.substring(0, ampersandPosition)
+    }
+    return video_id
 }
 
 export default Home
