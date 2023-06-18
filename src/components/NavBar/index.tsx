@@ -45,7 +45,7 @@ const NavBar = (props: INavBar) => {
                             />
                         </a>
                     </div>
-                    <div className="navbar-center hidden lg:flex">
+                    <div className="navbar-center hidden md:flex">
                         <ul className="menu menu-horizontal p-0">
                             <li>
                                 <a
@@ -111,7 +111,7 @@ const NavBar = (props: INavBar) => {
                 onClose={toggleDrawer}
                 direction="right"
                 duration={400}
-                className="w-2/3"
+                className="w-2/3 bg-base-200"
             >
                 <ul className="menu gap-5 w-full px-8 pt-10">
                     <li>
@@ -125,6 +125,14 @@ const NavBar = (props: INavBar) => {
                             href="#quem-somos"
                         >
                             Quem somos
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            className="active:text-warning"
+                            href={`mailto:${props.email}`}
+                        >
+                            E-mail
                         </Link>
                     </li>
 

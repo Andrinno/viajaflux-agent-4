@@ -14,6 +14,7 @@ module.exports = {
         themes: [
             {
                 light: {
+                    // eslint-disable-next-line @typescript-eslint/no-var-requires
                     ...require('daisyui/src/colors/themes')[
                         '[data-theme=light]'
                     ],
@@ -21,10 +22,12 @@ module.exports = {
                     '--rounded-btn': '0',
                 },
                 dark: {
+                    // eslint-disable-next-line @typescript-eslint/no-var-requires
                     ...require('daisyui/src/colors/themes')[
                         '[data-theme=dark]'
                     ],
                     primary: '#F3F3F3',
+                    'primary-content': '#000036',
                     '--rounded-btn': '0',
                 },
             },

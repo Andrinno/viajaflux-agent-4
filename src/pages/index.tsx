@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { Link } from 'react-daisyui'
+import { Link, Theme } from 'react-daisyui'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import Footer from '../components/Footer'
@@ -42,15 +42,12 @@ const Home = ({
     data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { api, setApi } = useContext(APIdata)
+
     setApi(data)
 
     const [navbar, setNavbar] = useState(false)
     const [isContainerOne, setIsContainerOne] = useState(false)
-    const [isContainerDiff, setIsContainerDiff] = useState(false)
-    const [isContainerFornec, SetIsContainerFornec] = useState(false)
     const boxRef = useRef<HTMLDivElement | null>(null)
-    const boxRefDiff = useRef<HTMLDivElement | null>(null)
-    const boxRefFornec = useRef<HTMLDivElement | null>(null)
 
     const changeBackground = () => {
         const posX = boxRef.current?.offsetTop ?? 0
@@ -63,25 +60,8 @@ const Home = ({
         }
     }
 
-    const changeContainerDiff = async () => {
-        const postHeight = boxRefDiff.current?.offsetTop
-        if (postHeight !== undefined) {
-            if (window.scrollY >= postHeight - 100) {
-                setIsContainerDiff(true)
-            }
-        }
-    }
-
-    const changeContainerFornec = async () => {
-        const postHeight = boxRefFornec.current?.offsetTop
-        if (postHeight !== undefined) {
-            if (window.scrollY >= postHeight + 100) {
-                SetIsContainerFornec(true)
-            }
-        }
-    }
-
     useEffect(() => {
+        window.addEventListener('scroll', changeBackground, { passive: true })
         const EffectContainerOne = async () => {
             await new Promise((resolve) => setTimeout(resolve, 200))
             setIsContainerOne(true)
@@ -89,26 +69,16 @@ const Home = ({
         EffectContainerOne().then((r) => r)
     }, [])
 
-    useEffect(() => {
-        window.addEventListener('scroll', changeBackground, { passive: true })
-        window.addEventListener('scroll', changeContainerDiff, {
-            passive: true,
-        })
-        window.addEventListener('scroll', changeContainerFornec, {
-            passive: true,
-        })
-    }, [])
-
     return (
-        <>
+        <Theme dataTheme={api.theme}>
             <Head>
-                <title>{api.company} - ViajaFlux</title>
+                <title>{`${api.company} - ViajaFlux`}</title>
                 <meta
                     name={'description'}
                     content={
-                        'ViajaFlux é a única plataforma com modelo de programa de ' +
-                        'fidelidade próprio que você lucra sem vender passagens e ' +
-                        'pacotes.'
+                        api && api.description
+                            ? api.description
+                            : 'ViajaFlux é a única plataforma com modelo de programa de fidelidade próprio que você lucra sem vender passagens e pacotes.'
                     }
                 />
             </Head>
@@ -122,8 +92,8 @@ const Home = ({
             />
 
             <div id="home" className="bg-base-200">
-                <div className="grid md:grid-cols-2 gap-12 place-items-center justify-between container mx-auto px-8 pt-48 pb-32">
-                    <div ref={boxRef} className="flex flex-col gap-12 max-w-xl">
+                <div className="grid md:grid-cols-2 gap-12 place-items-center justify-between container mx-auto px-8 pt-48 pb-32 max-w-7xl">
+                    <div ref={boxRef} className="flex flex-col gap-12">
                         <div>
                             <h1
                                 className={
@@ -156,7 +126,7 @@ const Home = ({
                             {api.cta}
                         </Link>
                     </div>
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl relative w-full h-full">
+                    <div className="flex justify-center items-center bg-gray-500 rounded-xl relative w-full h-full min-h-[300px]">
                         <Image
                             src={api.main_image}
                             fill
@@ -201,10 +171,10 @@ const Home = ({
             )}
             <div
                 id="produtos"
-                className="w-full flex flex-col sm:flex-row gap-20 max-w-7xl mx-auto px-8 py-24"
+                className="w-full flex flex-col sm:flex-row gap-12 max-w-7xl mx-auto px-8 py-12"
             >
                 <div className="w-full sm:w-6/12">
-                    <h2 className="text-4xl text-primary font-semibold mb-4">
+                    <h2 className="text-2xl text-primary font-semibold mb-4">
                         Produtos que você encontrará na {api.company}
                     </h2>
 
@@ -223,7 +193,7 @@ const Home = ({
                     </div>
                 </div>
                 <div className="w-full sm:w-6/12">
-                    <h3 className="text-2xl text-primary font-semibold my-4">
+                    <h3 className="text-2xl text-primary font-semibold mb-8">
                         {api.title_of_featured_product}
                     </h3>
                     <p className="text-justify">
@@ -241,7 +211,7 @@ const Home = ({
             </div>
 
             <Footer />
-        </>
+        </Theme>
     )
 }
 

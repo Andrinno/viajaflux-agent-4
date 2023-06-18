@@ -24,14 +24,16 @@ const Footer = () => {
 
     return (
         <>
-            <div className="relative px-4 mb-14 max-w-7xl mx-auto h-48">
-                <Image
-                    alt="Imagem do rodapé"
-                    loading="lazy"
-                    fill
-                    className="rounded-3xl object-cover"
-                    src={api.image_footer}
-                />
+            <div className="px-8">
+                <div className="relative mb-14 max-w-7xl mx-auto h-full">
+                    <Image
+                        alt="Imagem do rodapé"
+                        height={200}
+                        width={1250}
+                        className="object-contain rounded-xl shadow-lg"
+                        src={api.image_footer}
+                    />
+                </div>
             </div>
             <div className="bg-base-200 w-full">
                 <footer className="footer py-10 max-w-7xl flex flex-wrap justify-between mx-auto text-base-content px-8">
@@ -76,65 +78,41 @@ const Footer = () => {
 
                     <div className="flex flex-col gap-3 items-center">
                         <ul className="flex w-full flex-col gap-4 text-primary text-base">
-                            {api && api.payment && api.payment.length > 0 && (
-                                <>
-                                    <li
-                                        className={
-                                            api.payment[0] ? '' : 'hidden ...'
+                            {api &&
+                                api.payment &&
+                                api.payment.map(
+                                    (payment: string, index: number) => {
+                                        let icon
+
+                                        switch (payment) {
+                                            case 'Cartão de crédito':
+                                                icon = faCreditCard
+                                                break
+                                            case 'PIX':
+                                                icon = faPix
+                                                break
+                                            case 'Boleto':
+                                                icon = faBarcode
+                                                break
+                                            case 'Dinheiro':
+                                                icon = faMoneyCheck
+                                                break
+                                            default:
+                                                icon = faCreditCard
+                                                break
                                         }
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faCreditCard}
-                                            className="w-4 h-4 mr-2"
-                                        />
-                                        {api.payment[0]}
-                                    </li>
-                                    <li
-                                        className={
-                                            api.payment[1] ? '' : 'hidden ...'
-                                        }
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faPix}
-                                            className="w-4 h-4 mr-2"
-                                        />
-                                        {api.payment[1]}
-                                    </li>
-                                    <li
-                                        className={
-                                            api.payment[2] ? '' : 'hidden ...'
-                                        }
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faBarcode}
-                                            className="w-4 h-4 mr-2"
-                                        />
-                                        {api.payment[2]}
-                                    </li>
-                                    <li
-                                        className={
-                                            api.payment[3] ? '' : 'hidden ...'
-                                        }
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faMoneyCheck}
-                                            className="w-4 h-4 mr-2"
-                                        />
-                                        {api.payment[3]}
-                                    </li>
-                                    <li
-                                        className={
-                                            api.payment[4] ? '' : 'hidden ...'
-                                        }
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faMoneyCheck}
-                                            className="w-4 h-4 mr-2"
-                                        />
-                                        {api.payment[4]}
-                                    </li>
-                                </>
-                            )}
+
+                                        return (
+                                            <li key={index}>
+                                                <FontAwesomeIcon
+                                                    icon={icon}
+                                                    className="w-4 h-4 mr-2"
+                                                />
+                                                {payment}
+                                            </li>
+                                        )
+                                    }
+                                )}
                         </ul>
                     </div>
 
@@ -203,7 +181,7 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    <div className="flex items-center md:flex-col md:items-end gap-4 w-full md:w-auto justify-center">
+                    <div className="flex items-center md:flex-col gap-4 w-full md:w-auto justify-center rounded-xl p-4">
                         <Image
                             src={Cadastur}
                             width={130}
@@ -222,9 +200,13 @@ const Footer = () => {
                     </div>
                 </footer>
                 <div className="text-center w-full pb-6 text-xs">
-                    <p>Endereço - {api.address}</p>
-                    <p className={api.cnpj ? '' : 'hidden ...'}>
-                        CNPJ - {api.cnpj}
+                    <p>{api.address}</p>
+                    <p className={api.cnpj ? '' : 'hidden'}>
+                        CNPJ -{' '}
+                        {api.cnpj?.replace(
+                            /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                            '$1.$2.$3/$4-$5'
+                        )}
                     </p>
                     <p>
                         {new Date().getFullYear()} - {api.company}® | Todos os

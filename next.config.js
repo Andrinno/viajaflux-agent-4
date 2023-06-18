@@ -20,7 +20,9 @@ const nextConfig = withPWA({
             '127.0.0.1',
             'localhost',
             'viajaflux.com.br',
+            'app.viajaflux.com.br',
             'viajaflux.test',
+            'viajaflux-files.s3.us-west-2.amazonaws.com',
         ],
     },
 })

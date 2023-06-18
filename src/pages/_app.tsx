@@ -1,21 +1,16 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Theme, useTheme } from 'react-daisyui'
-import ApiContext, { APIdata } from '../../context/ApiContext'
-import { useContext } from 'react'
+
+import { Suspense } from 'react'
+import ApiContext from '../../context/ApiContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
-    const { theme, setTheme } = useTheme('light')
-    const { api } = useContext(APIdata)
-
-    setTheme(api?.theme)
-
     return (
-        <ApiContext>
-            <Theme dataTheme={theme}>
+        <Suspense fallback={<div>Loading...</div>}>
+            <ApiContext>
                 <Component {...pageProps} />
-            </Theme>
-        </ApiContext>
+            </ApiContext>
+        </Suspense>
     )
 }
 
