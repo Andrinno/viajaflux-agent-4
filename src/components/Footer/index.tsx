@@ -1,42 +1,32 @@
-import {
-    faFacebook,
-    faInstagram,
-    faLinkedinIn,
-    faYoutube,
-    faPix,
-} from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faFacebook, faInstagram, faLinkedinIn, faPix, faYoutube,} from '@fortawesome/free-brands-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
-import { Link } from 'react-daisyui'
+import {Link} from 'react-daisyui'
 import Cadastur from '../../assets/images/logo-cadastur.webp'
 import Clouflare from '../../assets/images/logo-cloudflare.webp'
 import SSL from '../../assets/images/logo-ssl.webp'
-import {
-    faCreditCard,
-    faBarcode,
-    faMoneyCheck,
-} from '@fortawesome/free-solid-svg-icons'
-import { APIdata } from '../../../context/ApiContext'
-import { useContext } from 'react'
+import {faBarcode, faCreditCard, faMoneyCheck,} from '@fortawesome/free-solid-svg-icons'
+import {APIdata} from '../../../context/ApiContext'
+import {useContext} from 'react'
 
 const Footer = () => {
-    const { api } = useContext(APIdata)
+    const {api} = useContext(APIdata)
 
     return (
         <>
             <div className="px-8">
-                <div className="relative mb-14 max-w-7xl mx-auto h-full">
+                <div className="relative mb-14 max-w-7xl mx-auto h-[192px]">
                     <Image
                         alt="Imagem do rodapé"
-                        height={200}
-                        width={1250}
-                        className="object-contain rounded-xl shadow-lg"
+                        fill
+                        className="object-cover rounded-xl shadow-lg"
                         src={api.image_footer}
                     />
                 </div>
             </div>
             <div className="bg-base-200 w-full">
-                <footer className="footer py-10 max-w-7xl flex flex-wrap justify-between mx-auto text-base-content px-8">
+                <footer
+                    className="footer py-10 max-w-7xl flex flex-wrap justify-between mx-auto text-base-content px-8">
                     <div className="flex w-6/12 md:w-auto flex-col h-full justify-between gap-5">
                         <ul className="flex w-full flex-col gap-4 text-primary text-base">
                             <li>
@@ -196,7 +186,7 @@ const Footer = () => {
                             alt="logo"
                         />
 
-                        <Image src={SSL} width={80} height={65} alt="logo" />
+                        <Image src={SSL} width={80} height={65} alt="logo"/>
                     </div>
                 </footer>
                 <div className="text-center w-full pb-6 text-xs">
