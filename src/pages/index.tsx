@@ -1,17 +1,17 @@
-import type {GetServerSideProps, InferGetServerSidePropsType} from 'next'
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
-import {useContext, useEffect, useRef, useState} from 'react'
-import {Link, Theme} from 'react-daisyui'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { Link, Theme } from 'react-daisyui'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import Footer from '../components/Footer'
-import {IData} from '../@types/api'
-import {APIdata} from '../../context/ApiContext'
+import { IData } from '../@types/api'
+import { APIdata } from '../../context/ApiContext'
 // import Footer from "../components/Footer";
 
-const NavBar = dynamic(() => import('../components/NavBar'), {ssr: false})
+const NavBar = dynamic(() => import('../components/NavBar'), { ssr: false })
 
 export const getServerSideProps: GetServerSideProps<{
     data: IData
@@ -39,9 +39,9 @@ export const getServerSideProps: GetServerSideProps<{
 }
 
 const Home = ({
-                  data,
-              }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    const {api, setApi} = useContext(APIdata)
+    data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    const { api, setApi } = useContext(APIdata)
 
     setApi(data)
 
@@ -61,7 +61,7 @@ const Home = ({
     }
 
     useEffect(() => {
-        window.addEventListener('scroll', changeBackground, {passive: true})
+        window.addEventListener('scroll', changeBackground, { passive: true })
         const EffectContainerOne = async () => {
             await new Promise((resolve) => setTimeout(resolve, 200))
             setIsContainerOne(true)
@@ -92,8 +92,7 @@ const Home = ({
             />
 
             <div id="home" className="bg-base-200">
-                <div
-                    className="grid md:grid-cols-2 gap-12 place-items-center justify-between container mx-auto px-8 pt-28 pb-12 md:pt-48 md:pb-32 max-w-7xl">
+                <div className="grid md:grid-cols-2 gap-12 place-items-center justify-between container mx-auto px-8 pt-28 pb-12 md:pt-48 md:pb-32 max-w-7xl">
                     <div ref={boxRef} className="flex flex-col gap-6 md:gap-12">
                         <div>
                             <h1
@@ -127,8 +126,7 @@ const Home = ({
                             {api.cta}
                         </Link>
                     </div>
-                    <div
-                        className="flex justify-center items-center bg-gray-500 rounded-xl relative w-full h-full min-h-[300px]">
+                    <div className="flex justify-center items-center bg-gray-500 rounded-xl relative w-full h-full min-h-[300px]">
                         <Image
                             src={api.main_image}
                             fill
@@ -212,7 +210,7 @@ const Home = ({
                 </div>
             </div>
 
-            <Footer/>
+            <Footer />
         </Theme>
     )
 }
