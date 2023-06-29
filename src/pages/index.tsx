@@ -126,7 +126,7 @@ const Home = ({
                             {api.cta}
                         </Link>
                     </div>
-                    <div className="flex justify-center items-center bg-gray-500 rounded-xl relative w-full h-full min-h-[300px]">
+                    <div className="flex justify-center items-center rounded-xl relative w-full h-full min-h-[300px]">
                         <Image
                             src={api.main_image}
                             fill
@@ -199,7 +199,7 @@ const Home = ({
                     <p className="text-justify">
                         {api.description_of_featured_product}
                     </p>
-                    <div className="relative flex justify-center items-center w-full h-72 bg-base-200 rounded-xl mt-4">
+                    <div className="relative flex justify-center items-center w-full h-72 rounded-xl mt-4">
                         <Image
                             src={api.image_of_featured_product}
                             fill
@@ -216,7 +216,9 @@ const Home = ({
 }
 
 function extractVideo(video: string) {
-    const video_id = video.split('v=')[1]
+    const video_id = video.includes('v=')
+        ? video.split('v=')[1]
+        : video.split('youtu.be/')[1]
     const ampersandPosition = video_id.indexOf('&')
     if (ampersandPosition != -1) {
         return video_id.substring(0, ampersandPosition)

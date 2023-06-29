@@ -24,12 +24,12 @@ const Footer = () => {
 
     return (
         <>
-            <div className="px-8">
-                <div className="relative mb-14 max-w-7xl mx-auto h-[192px]">
+            <div className="px-8 max-w-7xl mx-auto">
+                <div className="relative mb-14 h-[192px]">
                     <Image
                         alt="Imagem do rodapé"
                         fill
-                        className="object-cover rounded-xl shadow-lg"
+                        className="object-cover rounded-xl shadow-lg bg-base-200"
                         src={api.image_footer}
                     />
                 </div>
