@@ -3,12 +3,13 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { Link, Theme } from 'react-daisyui'
+import { Theme } from 'react-daisyui'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import Footer from '../components/Footer'
 import { IData } from '../@types/api'
 import { APIdata } from '../../context/ApiContext'
+import CTA from '../components/CTA'
 // import Footer from "../components/Footer";
 
 const NavBar = dynamic(() => import('../components/NavBar'), { ssr: false })
@@ -89,6 +90,7 @@ const Home = ({
                 action_buttons={api.cta}
                 phone={api.phone}
                 email={api.email}
+                enable_popup={api.enable_popup}
             />
 
             <div id="home" className="bg-base-200">
@@ -114,17 +116,15 @@ const Home = ({
                             {api.description}
                         </p>
 
-                        <Link
-                            target={'_blank'}
-                            href={`https://wa.me/+55${api.phone}`}
-                            rel={'noreferrer'}
+                        <CTA
+                            phone={api.phone}
+                            action_buttons={api.cta}
+                            popup={api.enable_popup}
                             className={
                                 'btn btn-sm btn-primary sm:btn-lg w-fit normal-case no-underline transition-all duration-1000 ' +
                                 (isContainerOne ? 'ml-0' : '-ml-[1500px]')
                             }
-                        >
-                            {api.cta}
-                        </Link>
+                        />
                     </div>
                     <div className="flex justify-center items-center rounded-xl relative w-full h-full min-h-[300px]">
                         <Image
@@ -136,7 +136,8 @@ const Home = ({
                     </div>
                 </div>
             </div>
-            {api.video && (
+
+            {api.video && api.video.includes('youtube') && (
                 <div
                     id="quem-somos"
                     className="container mx-auto flex py-14 px-8 flex-col justify-center items-center bg-base-100"
@@ -159,14 +160,12 @@ const Home = ({
                             </div>
                         </div>
                     </div>
-                    <Link
-                        target={'_blank'}
-                        href={`https://wa.me/+55${api.phone}`}
-                        rel={'noreferrer'}
-                        className="btn btn-primary mt-10 normal-case w-64 no-underline"
-                    >
-                        {api.cta}
-                    </Link>
+                    <CTA
+                        phone={api.phone}
+                        action_buttons={api.cta}
+                        popup={api.enable_popup}
+                        className={'w-64 mt-10 no-underline'}
+                    />
                 </div>
             )}
             <div

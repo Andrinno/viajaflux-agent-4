@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
+import CTA from '../CTA'
 
 interface INavBar {
     onColor: boolean
@@ -11,6 +12,7 @@ interface INavBar {
     action_buttons: string
     phone: string
     email: string
+    enable_popup?: boolean
 }
 
 const NavBar = (props: INavBar) => {
@@ -19,6 +21,7 @@ const NavBar = (props: INavBar) => {
     const toggleDrawer = () => {
         setOpenDrawer((prevState) => !prevState)
     }
+
     return (
         <>
             <div
@@ -74,14 +77,13 @@ const NavBar = (props: INavBar) => {
                         </ul>
                     </div>
                     <div className="navbar-end flex gap-3">
-                        <Link
-                            target={'_blank'}
-                            href={`https://wa.me/+55${props.phone}`}
-                            rel={'noreferrer'}
-                            className="btn btn-primary normal-case hidden md:inline-flex"
-                        >
-                            {props.action_buttons}
-                        </Link>
+                        <CTA
+                            phone={props.phone}
+                            action_buttons={props.action_buttons}
+                            popup={props.enable_popup}
+                            className={'hidden md:inline-flex'}
+                        />
+
                         <button
                             aria-label="menu"
                             className="block md:hidden text-primary"
@@ -136,13 +138,11 @@ const NavBar = (props: INavBar) => {
                         </Link>
                     </li>
 
-                    <Link
-                        href={`https://wa.me/55${props.phone}`}
-                        target={'_blank'}
-                        className="btn btn-primary normal-case"
-                    >
-                        Falar com um agente
-                    </Link>
+                    <CTA
+                        phone={props.phone}
+                        action_buttons={props.action_buttons}
+                        popup={props.enable_popup}
+                    />
                 </ul>
             </Drawer>
         </>
