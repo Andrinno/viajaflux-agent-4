@@ -24,4 +24,5 @@ export interface IData {
     title_of_featured_product: string
     description_of_featured_product: string
     image_of_featured_product: string
+    popup: boolean
 }

@@ -18,6 +18,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { APIdata } from '../../../context/ApiContext'
 import { useContext } from 'react'
+import BlurImage from '../BlurImage'
 
 const Footer = () => {
     const { api } = useContext(APIdata)
@@ -26,12 +27,14 @@ const Footer = () => {
         <>
             <div className="px-8 max-w-7xl mx-auto">
                 <div className="relative mb-14 h-[192px]">
-                    <Image
-                        alt="Imagem do rodapé"
-                        fill
-                        className="object-cover rounded-xl shadow-lg bg-base-200"
-                        src={api.image_footer}
-                    />
+                    {api.image_footer && (
+                        <BlurImage
+                            alt="Imagem do rodapé"
+                            fill
+                            className="object-cover rounded-xl shadow-lg bg-base-200"
+                            src={api.image_footer}
+                        />
+                    )}
                 </div>
             </div>
             <div className="bg-base-200 w-full">
@@ -181,21 +184,26 @@ const Footer = () => {
                     </div>
 
                     <div className="flex items-center md:flex-col gap-4 w-full md:w-auto justify-center rounded-xl p-4">
-                        <Image
+                        <BlurImage
                             src={Cadastur}
                             width={130}
                             height={65}
                             alt="logo"
                         />
 
-                        <Image
+                        <BlurImage
                             src={Clouflare}
                             width={100}
                             height={65}
                             alt="logo"
                         />
 
-                        <Image src={SSL} width={80} height={65} alt="logo" />
+                        <BlurImage
+                            src={SSL}
+                            width={80}
+                            height={65}
+                            alt="logo"
+                        />
                     </div>
                 </footer>
                 <div className="text-center w-full pb-6 text-xs">

@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 import CTA from '../CTA'
+import BlurImage from '../BlurImage'
 
 interface INavBar {
     onColor: boolean
@@ -38,14 +38,14 @@ const NavBar = (props: INavBar) => {
                             href="#home"
                             className="relative h-12 w-24 md:w-32 flex"
                         >
-                            <Image
-                                src={props.logo}
-                                fill
-                                alt="logo"
-                                // loading="lazy"
-                                priority={true}
-                                className="cursor-pointer object-contain"
-                            />
+                            {props.logo && (
+                                <BlurImage
+                                    src={props.logo}
+                                    fill
+                                    alt="logo"
+                                    className="cursor-pointer object-contain"
+                                />
+                            )}
                         </a>
                     </div>
                     <div className="navbar-center hidden md:flex">

@@ -17,3 +17,7 @@ body {
 .subtitle {
    @apply leading-tight text-4xl;
 }
+
+#vsl iframe {
+   @apply w-full h-full rounded-xl;
+}
