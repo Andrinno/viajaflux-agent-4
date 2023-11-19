@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { APIdata } from '../../../context/ApiContext'
 
 const ProgressBar = (props: { player: YT.Player | undefined }) => {
     const [currentTime, setCurrentTime] = useState(0)
     const [duration, setDuration] = useState(0)
+    const { setVideoTime } = useContext(APIdata)
 
     useEffect(() => {
         const interval = setInterval(() => {
             if (props.player) {
                 setCurrentTime(props.player.getCurrentTime())
                 setDuration(props.player.getDuration())
+                setVideoTime(props.player.getCurrentTime())
             }
         }, 100)
 

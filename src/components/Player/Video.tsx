@@ -73,7 +73,7 @@ export default function Video(props: {
                     className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 cursor-pointer"
                     onClick={handleStartVideo}
                 >
-                    <div className="w-44 h-36 rounded-xl bg-primary/80 animate-pulse flex items-center justify-center flex-col gap-2 p-4 text-center">
+                    <div className="w-60 h-36 rounded-xl bg-primary/80 animate-pulse flex items-center justify-center flex-col gap-2 p-8 text-center">
                         <span className="text-white">
                             Clique aqui para assistir!
                         </span>
@@ -136,7 +136,7 @@ export default function Video(props: {
                                             className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 cursor-pointer"
                                             onClick={handleStartVideo}
                                         >
-                                            <div className="w-full h-36 animate-pulse rounded-xl bg-primary/80 flex items-center justify-center flex-col gap-2 p-4 text-center">
+                                            <div className="w-full h-full animate-pulse rounded-xl bg-primary/80 flex items-center justify-center flex-col gap-2 p-4 text-center">
                                                 <span className="text-white">
                                                     Continue assistindo!
                                                 </span>

@@ -24,5 +24,7 @@ export interface IData {
     title_of_featured_product: string
     description_of_featured_product: string
     image_of_featured_product: string
-    popup: boolean
+    enable_popup: boolean
+    vsl_mode: boolean
+    vsl_time: number
 }
