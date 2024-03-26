@@ -6,7 +6,6 @@ import {
     faYoutube,
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Image from 'next/image'
 import { Link } from 'react-daisyui'
 import Cadastur from '../../assets/images/logo-cadastur.webp'
 import Clouflare from '../../assets/images/logo-cloudflare.webp'
@@ -23,24 +22,28 @@ import BlurImage from '../BlurImage'
 const Footer = () => {
     const { api } = useContext(APIdata)
 
+    const footerMedia = api.media.filter(
+        (media: any) => media.collection_name === 'footer'
+    )
+
     return (
         <>
-            <div className="px-8 max-w-7xl mx-auto">
+            <div className="px-8 mx-auto max-w-7xl">
                 <div className="relative mb-14 h-[192px]">
-                    {api.image_footer && (
+                    {footerMedia && (
                         <BlurImage
                             alt="Imagem do rodapé"
                             fill
-                            className="object-cover rounded-xl shadow-lg bg-base-200"
-                            src={api.image_footer}
+                            src={footerMedia[0].original_url}
+                            className="object-contain object-top lg:object-cover rounded-xl"
                         />
                     )}
                 </div>
             </div>
-            <div className="bg-base-200 w-full">
-                <footer className="footer py-10 max-w-7xl flex flex-wrap justify-between mx-auto text-base-content px-8">
-                    <div className="flex w-6/12 md:w-auto flex-col h-full justify-between gap-5">
-                        <ul className="flex w-full flex-col gap-4 text-primary text-base">
+            <div className="w-full bg-base-200">
+                <footer className="flex flex-wrap justify-between px-8 py-10 mx-auto footer max-w-7xl text-base-content">
+                    <div className="flex flex-col justify-between w-6/12 h-full gap-5 md:w-auto">
+                        <ul className="flex flex-col w-full gap-4 text-base text-primary">
                             <li>
                                 <a
                                     className="active:text-warning"
@@ -69,7 +72,7 @@ const Footer = () => {
                                 <a
                                     className="active:text-warning"
                                     target={'_blank'}
-                                    href={`https://wa.me/+55${api.phone}`}
+                                    href={`https://wa.me/+${api.country_code}${api.phone}`}
                                     rel={'noreferrer'}
                                 >
                                     WhatsApp
@@ -78,11 +81,11 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    <div className="flex flex-col gap-3 items-center">
-                        <ul className="flex w-full flex-col gap-4 text-primary text-base">
+                    <div className="flex flex-col items-center gap-3">
+                        <ul className="flex flex-col w-full gap-4 text-base text-primary">
                             {api &&
-                                api.payment &&
-                                api.payment.map(
+                                api.payment_methods &&
+                                api.payment_methods.map(
                                     (payment: string, index: number) => {
                                         let icon
 
@@ -90,7 +93,7 @@ const Footer = () => {
                                             case 'Cartão de crédito':
                                                 icon = faCreditCard
                                                 break
-                                            case 'PIX':
+                                            case 'Pix':
                                                 icon = faPix
                                                 break
                                             case 'Boleto':
@@ -105,7 +108,10 @@ const Footer = () => {
                                         }
 
                                         return (
-                                            <li key={index}>
+                                            <li
+                                                key={index}
+                                                className="flex items-center"
+                                            >
                                                 <FontAwesomeIcon
                                                     icon={icon}
                                                     className="w-4 h-4 mr-2"
@@ -118,13 +124,13 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    <div className="flex flex-col gap-3 items-center">
-                        <ul className="flex w-full flex-col gap-4 text-primary text-base">
+                    <div className="flex flex-col items-center gap-3">
+                        <ul className="flex flex-col w-full gap-4 text-base text-primary">
                             {api.instagram && (
                                 <li>
                                     <Link
                                         href={api.instagram}
-                                        className="active:text-warning no-underline"
+                                        className="no-underline active:text-warning"
                                         target={'_blank'}
                                     >
                                         <FontAwesomeIcon
@@ -139,7 +145,7 @@ const Footer = () => {
                                 <li>
                                     <Link
                                         href={api.facebook}
-                                        className="active:text-warning no-underline"
+                                        className="no-underline active:text-warning"
                                         target={'_blank'}
                                     >
                                         <FontAwesomeIcon
@@ -154,7 +160,7 @@ const Footer = () => {
                                 <li>
                                     <Link
                                         href={api.youtube}
-                                        className="active:text-warning no-underline"
+                                        className="no-underline active:text-warning"
                                         target={'_blank'}
                                     >
                                         <FontAwesomeIcon
@@ -169,7 +175,7 @@ const Footer = () => {
                                 <li>
                                     <Link
                                         href={api.linkedin}
-                                        className="active:text-warning no-underline"
+                                        className="no-underline active:text-warning"
                                         target={'_blank'}
                                     >
                                         <FontAwesomeIcon
@@ -183,7 +189,7 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    <div className="flex items-center md:flex-col gap-4 w-full md:w-auto justify-center rounded-xl p-4">
+                    <div className="flex items-center justify-center w-full gap-4 p-4 md:flex-col md:w-auto rounded-xl">
                         <BlurImage
                             src={Cadastur}
                             width={130}
@@ -206,7 +212,7 @@ const Footer = () => {
                         />
                     </div>
                 </footer>
-                <div className="text-center w-full pb-6 text-xs">
+                <div className="w-full pb-6 text-xs text-center">
                     <p>{api.address}</p>
                     <p className={api.cnpj ? '' : 'hidden'}>
                         CNPJ -{' '}
@@ -216,7 +222,7 @@ const Footer = () => {
                         )}
                     </p>
                     <p>
-                        {new Date().getFullYear()} - {api.company}® | Todos os
+                        {new Date().getFullYear()} - {api.team.name}® | Todos os
                         direitos reservados
                     </p>
                 </div>

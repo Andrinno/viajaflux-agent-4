@@ -32,24 +32,25 @@ const NavBar = (props: INavBar) => {
                         : 'bg-base-100 shadow glass')
                 }
             >
-                <div className="w-full max-w-7xl mx-auto px-4 py-4">
+                <div className="w-full px-4 py-4 mx-auto max-w-7xl">
                     <div className="navbar-start">
                         <a
                             href="#home"
-                            className="relative h-12 w-24 md:w-32 flex"
+                            className="relative flex w-24 h-12 md:w-32"
                         >
                             {props.logo && (
                                 <BlurImage
-                                    src={props.logo}
+                                    src={`http://app.viajaflux.test/${props.logo}`}
                                     fill
                                     alt="logo"
-                                    className="cursor-pointer object-contain"
+                                    className="object-contain cursor-pointer"
                                 />
                             )}
                         </a>
                     </div>
-                    <div className="navbar-center hidden md:flex">
-                        <ul className="menu menu-horizontal p-0">
+
+                    <div className="hidden navbar-center md:flex">
+                        <ul className="p-0 menu menu-horizontal">
                             <li>
                                 <a
                                     className="active:text-warning"
@@ -76,12 +77,12 @@ const NavBar = (props: INavBar) => {
                             </li>
                         </ul>
                     </div>
-                    <div className="navbar-end flex gap-3">
+                    <div className="flex gap-3 navbar-end">
                         <CTA
                             phone={props.phone}
                             action_buttons={props.action_buttons}
                             popup={props.enable_popup}
-                            className={'hidden md:inline-flex'}
+                            className={`hidden md:inline-flex`}
                         />
 
                         <button
@@ -115,7 +116,7 @@ const NavBar = (props: INavBar) => {
                 duration={400}
                 className="w-2/3 bg-base-200"
             >
-                <ul className="menu gap-5 w-full px-8 pt-10">
+                <ul className="w-full gap-5 px-8 pt-10 menu">
                     <li>
                         <Link className="active:text-warning" href="#produtos">
                             Produtos
