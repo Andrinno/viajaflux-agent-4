@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import YouTube from 'react-youtube'
-import ProgressBar from './ProgressBar'
 import BlurImage from '../BlurImage'
-import { APIdata } from '../../../context/ApiContext'
+import ProgressBar from './ProgressBar'
 
 export default function Video(props: {
     id: string
@@ -13,27 +12,6 @@ export default function Video(props: {
     const [videoPaused, setVideoPaused] = useState(false)
     const [videoPlayer, setVideoPlayer] = useState<YT.Player>()
     const playerRef = useRef<YouTube>(null)
-
-    const { api } = useContext(APIdata)
-
-    const [isMobile, setIsMobile] = useState(false)
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 768)
-        }
-        window.addEventListener('resize', handleResize)
-        return () => window.removeEventListener('resize', handleResize)
-    }, [])
-
-    // Inicia o vídeo no mobile
-    useEffect(() => {
-        if (isMobile) {
-            handleStartVideo()
-            setVideoPaused(true)
-        }
-    }, [isMobile])
-    // Inicia o vídeo no mobile
 
     const onReady = (event: YT.PlayerEvent) => {
         setVideoPlayer(event.target)
@@ -59,20 +37,10 @@ export default function Video(props: {
     const opts = {
         playerVars: {
             autoplay: 1,
-            playsInline: 1,
+            modestbranding: 0,
             rel: 0,
+            showinfo: 0,
             controls: 0,
-            loop: 1,
-        },
-    }
-
-    const mutedOpts = {
-        playerVars: {
-            autoplay: 1,
-            rel: 0,
-            controls: 0,
-            loop: 1,
-            mute: isMobile ? 0 : 1,
         },
     }
 
@@ -93,6 +61,7 @@ export default function Video(props: {
                     Carregando
                 </div>
             </div>
+
             <div
                 className={`absolute top-0 left-0 w-full h-full ${
                     !videoStarted ? 'block' : 'hidden'
@@ -100,58 +69,32 @@ export default function Video(props: {
             >
                 {/* Imagem Inicial */}
                 {/* play */}
-
-                <div
-                    className={`transition-all delay-[2s] w-full aspect-video rounded-xl overflow-hidden box-glow`}
-                >
-                    <div className={'player'}>
-                        <YouTube
-                            videoId={props.id}
-                            opts={mutedOpts}
-                            onEnd={() => setVideoStarted(false)}
-                            ref={playerRef}
-                            onReady={onReady}
-                            className={`absolute top-0 left-0 w-full h-full aspect-video transition opacity-0 ${
-                                videoPaused
-                                    ? 'opacity-0'
-                                    : 'opacity-100 duration-1000'
-                            }`}
-                        />
-                    </div>
-                </div>
-
                 <div
                     className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 cursor-pointer"
                     onClick={handleStartVideo}
                 >
-                    <div
-                        style={{ backgroundColor: `${api.bg_color}` }}
-                        className={`relative w-48 h-32 sm:w-96 sm:h-52 text-xs sm:text-lg rounded-xl border-2 border-white flex items-center justify-between flex-col gap-2 p-4 text-center`}
-                    >
-                        <span className="text-white font-semibold">
-                            Clique aqui
+                    <div className="w-60 h-36 rounded-xl bg-primary/80 animate-pulse flex items-center justify-center flex-col gap-2 p-8 text-center">
+                        <span className="text-white">
+                            Clique aqui para assistir!
                         </span>
-                        <div className={'relative w-full h-24'}>
-                            <BlurImage
-                                fill
-                                src={'/muted.svg'}
-                                alt={'Muted'}
-                                className={'animate-ping'}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-24 h-24 text-white ml-4"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
                             />
-                            <BlurImage
-                                fill
-                                src={'/muted.svg'}
-                                alt={'Muted'}
-                                className={'opacity-20'}
-                            />
-                        </div>
-                        <span className="text-white font-semibold">
-                            para ativar o som
-                        </span>
+                        </svg>
                     </div>
                 </div>
                 {/* Imagem do vídeo */}
-                <div className="top-0 absolute w-full h-full -z-10">
+                <div className="relative w-full h-full">
                     <BlurImage
                         fill
                         src={
@@ -166,13 +109,14 @@ export default function Video(props: {
                     />
                 </div>
             </div>
+
             <div
                 className={`opacity-0 ${
                     videoStarted && 'opacity-100 transition-all delay-[2s]'
                 } w-full aspect-video rounded-xl overflow-hidden box-glow`}
             >
                 {videoStarted ? (
-                    <div className={'player'}>
+                    <div id={'vsl'}>
                         <div
                             className="absolute w-full h-full z-10 cursor-pointer"
                             onClick={toggleVideoPause}
@@ -192,38 +136,24 @@ export default function Video(props: {
                                             className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 cursor-pointer"
                                             onClick={handleStartVideo}
                                         >
-                                            <div
-                                                style={{
-                                                    backgroundColor: `${api.bg_color}`,
-                                                }}
-                                                className="relative w-48 h-32 sm:w-96 sm:h-52 text-xs sm:text-lg rounded-xl border-2 border-white flex items-center justify-between flex-col gap-2 p-4 text-center"
-                                            >
-                                                <span className="text-white font-semibold">
-                                                    Clique aqui
+                                            <div className="w-full h-full animate-pulse rounded-xl bg-primary/80 flex items-center justify-center flex-col gap-2 p-4 text-center">
+                                                <span className="text-white">
+                                                    Continue assistindo!
                                                 </span>
-                                                <div
-                                                    className={
-                                                        'relative w-full h-24'
-                                                    }
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                    strokeWidth={1.5}
+                                                    stroke="currentColor"
+                                                    className="w-24 h-24 text-white ml-4"
                                                 >
-                                                    <BlurImage
-                                                        fill
-                                                        src={'/muted.svg'}
-                                                        alt={'Muted'}
-                                                        className={
-                                                            'animate-ping'
-                                                        }
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
                                                     />
-                                                    <BlurImage
-                                                        fill
-                                                        src={'/muted.svg'}
-                                                        alt={'Muted'}
-                                                        className={'opacity-20'}
-                                                    />
-                                                </div>
-                                                <span className="text-white font-semibold">
-                                                    para continuar assistindo
-                                                </span>
+                                                </svg>
                                             </div>
                                         </div>
 

@@ -29,7 +29,7 @@ const CTA = (props: ICta) => {
     ) : (
         <Link
             target={'_blank'}
-            href={`https://wa.me/55${phone}`}
+            href={`https://wa.me/${phone}`}
             rel={'noreferrer'}
             className={`btn normal-case border-none`}
             style={{ backgroundColor: api.bg_color, color: api.color }}

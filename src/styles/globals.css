@@ -18,6 +18,6 @@ body {
    @apply leading-tight text-4xl;
 }
 
-#vsl iframe {
+iframe {
    @apply w-full h-full rounded-xl;
 }

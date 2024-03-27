@@ -65,16 +65,20 @@ export default function Monaco(params: MonacoProps) {
     }, [])
 
     useEffect(() => {
-        if (api && !api.vsl_mode) {
+        if (
+            !(
+                (api && !api.vsl_mode) ||
+                (api.vsl_mode && videoTime > api.vsl_time) ||
+                (api.vsl_mode && !api.video)
+            )
+        ) {
+            if (api.vsl_mode && api.video && videoTime < api.vsl_time) {
+                setIsVisible(false)
+            }
+        } else {
             setIsVisible(true)
         }
-
-        if (api.vsl_mode && videoTime > api.vsl_time) {
-            setIsVisible(true)
-        } else if (api.vsl_mode && videoTime < api.vsl_time) {
-            setIsVisible(false)
-        }
-    }, [api, setIsVisible, videoTime])
+    }, [videoTime])
 
     useEffect(() => {
         if (api?.media) {
@@ -109,7 +113,7 @@ export default function Monaco(params: MonacoProps) {
                     onColor={navbar}
                     logo={api.team.team_photo_url}
                     action_buttons={api.cta}
-                    phone={api.phone}
+                    phone={`${api.country_code}${api.phone}`}
                     email={api.email}
                     enable_popup={api.enable_popup}
                 />
@@ -117,8 +121,8 @@ export default function Monaco(params: MonacoProps) {
             <div
                 id="vsl_mode"
                 className={`flex ${
-                    !api.vsl_mode ? 'flex-col' : 'flex-col-reverse'
-                }`}
+                    !api.vsl_mode ? 'flex-col' : 'flex-col-reverse justify-end'
+                } ${!isVisible && 'h-screen'}`}
             >
                 {isVisible && (
                     <div id="home" className="bg-base-200">
@@ -153,7 +157,7 @@ export default function Monaco(params: MonacoProps) {
                                 </p>
 
                                 <CTA
-                                    phone={api.phone}
+                                    phone={`${api.country_code}${api.phone}`}
                                     action_buttons={api.cta}
                                     popup={api.enable_popup}
                                     className={
@@ -181,23 +185,24 @@ export default function Monaco(params: MonacoProps) {
                     <div
                         id="quem-somos"
                         className={`container mx-auto flex ${
-                            isVisible ? 'py-14' : 'py-14'
+                            isVisible ? 'pt-32 pb-12' : 'py-14'
                         } px-8 flex-col justify-center items-center bg-base-100`}
                     >
                         <h2
                             className="mb-8 text-4xl font-semibold text-center"
                             style={{ color: api.bg_color }}
                         >
-                            {api.team.name}
+                            {isVisible ? api.team.name : api.head}
                         </h2>
 
                         {/*<div className="relative w-full h-full overflow-hidden rounded-xl">*/}
-                        <Video id={extractVideo(api.video)} />
-                        {/*</div>*/}
+                        <div className="max-w-4xl w-full aspect-video box-glow rounded-2xl">
+                            <Video id={extractVideo(api.video)} />
+                        </div>
 
                         {isVisible && (
                             <CTA
-                                phone={api.phone}
+                                phone={`${api.country_code}${api.phone}`}
                                 action_buttons={api.cta}
                                 popup={api.enable_popup}
                                 className={'w-64 mt-10 no-underline'}

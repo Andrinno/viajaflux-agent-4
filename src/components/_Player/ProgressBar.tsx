@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { APIdata } from '../../../context/ApiContext'
 
-export default function ProgressBar(props: { player: YT.Player | undefined }) {
+const ProgressBar = (props: { player: YT.Player | undefined }) => {
     const [currentTime, setCurrentTime] = useState(0)
     const [duration, setDuration] = useState(0)
-    // const [videoTime, setVideoTime] = useState(0)
     const { setVideoTime } = useContext(APIdata)
 
     useEffect(() => {
@@ -44,3 +43,5 @@ export default function ProgressBar(props: { player: YT.Player | undefined }) {
         </div>
     )
 }
+
+export default ProgressBar
