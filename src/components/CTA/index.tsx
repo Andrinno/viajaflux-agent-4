@@ -1,7 +1,5 @@
 import Link from 'next/link'
-import { SetStateAction, useContext, useState } from 'react'
-import * as yup from 'yup'
-import { toast } from 'react-toastify'
+import { useContext } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import { APIdata } from '../../../context/ApiContext'
 
