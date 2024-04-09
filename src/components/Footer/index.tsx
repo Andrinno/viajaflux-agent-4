@@ -28,18 +28,20 @@ const Footer = () => {
 
     return (
         <>
-            <div className="px-8 mx-auto max-w-7xl">
-                <div className="relative mb-14 h-[192px]">
-                    {footerMedia && (
-                        <BlurImage
-                            alt="Imagem do rodapé"
-                            fill
-                            src={footerMedia[0].original_url}
-                            className="object-contain object-top lg:object-cover rounded-xl"
-                        />
-                    )}
+            {footerMedia[0] && (
+                <div className="px-8 mx-auto max-w-7xl">
+                    <div className="relative mb-14 h-[192px]">
+                        {footerMedia && (
+                            <BlurImage
+                                alt="Imagem do rodapé"
+                                fill
+                                src={footerMedia[0]?.original_url}
+                                className="object-contain object-top lg:object-cover rounded-xl"
+                            />
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
             <div className="w-full bg-base-200">
                 <footer className="flex flex-wrap justify-between px-8 py-10 mx-auto footer max-w-7xl text-base-content">
                     <div className="flex flex-col justify-between w-6/12 h-full gap-5 md:w-auto">

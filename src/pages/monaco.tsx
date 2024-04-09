@@ -169,7 +169,7 @@ export default function Monaco(params: MonacoProps) {
                                 />
                             </div>
                             <div className="flex justify-center items-center rounded-xl relative w-full h-full min-h-[300px]">
-                                {mainMedia[0].original_url && (
+                                {mainMedia[0]?.original_url && (
                                     <BlurImage
                                         src={mainMedia[0].original_url}
                                         fill
@@ -250,14 +250,15 @@ export default function Monaco(params: MonacoProps) {
                             {api.featured_description}
                         </p>
                         <div className="relative flex items-center justify-center w-full mt-4 h-72 rounded-xl">
-                            {featuredMedia && featuredMedia[0].original_url && (
-                                <BlurImage
-                                    src={featuredMedia[0].original_url}
-                                    fill
-                                    alt="Produto em destaque"
-                                    className="object-contain object-top lg:object-cover rounded-xl"
-                                />
-                            )}
+                            {featuredMedia &&
+                                featuredMedia[0]?.original_url && (
+                                    <BlurImage
+                                        src={featuredMedia[0].original_url}
+                                        fill
+                                        alt="Produto em destaque"
+                                        className="object-contain object-top lg:object-cover rounded-xl"
+                                    />
+                                )}
                         </div>
                     </div>
                 </div>
