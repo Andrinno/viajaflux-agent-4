@@ -5,6 +5,7 @@ import { APIdata } from '../../context/ApiContext'
 import * as yup from 'yup'
 import { toast } from 'react-toastify'
 import Monaco from './monaco'
+import Maldivas from './maldivas'
 
 export const getServerSideProps: GetServerSideProps<{
     data: IData
@@ -121,7 +122,7 @@ const Home = ({
             whatsapp,
         },
     }
-    return api?.id && <Monaco params={params} />
+    return api?.id && <Maldivas params={params} />
 }
 
 export default Home

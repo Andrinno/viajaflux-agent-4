@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 * {
-   scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-   font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 .title {
-   @apply leading-tight text-5xl;
+    @apply leading-tight text-5xl;
 }
 
 .subtitle {
-   @apply leading-tight text-4xl;
+    @apply leading-tight text-4xl;
 }
 
 iframe {
-   @apply w-full h-full rounded-xl;
+    @apply w-full h-full rounded-xl;
 }
