@@ -12,6 +12,7 @@ import Footer from '../components/Footer'
 import Image from 'next/image'
 import maldivasImage from '../assets/images/maldivas.webp'
 import Firefly from '../components/FireFly'
+import { FloatingWhatsApp } from 'react-floating-whatsapp'
 
 interface MaldivasProps {
     params: {
@@ -130,6 +131,18 @@ export default function Maldivas(params: MaldivasProps) {
             >
                 {isVisible && (
                     <div id="home">
+                        <FloatingWhatsApp
+                            phoneNumber="+5518996505452"
+                            accountName="Agência Fly Prime"
+                            placeholder=" Digite uma mensagem"
+                            darkMode={false}
+                            allowClickAway={true}
+                            allowEsc={true}
+                            chatMessage={`Olá! 🤝${'\n'}Como podemos te ajudar?`}
+                            statusMessage="Tempo de resposta: 1 hora"
+                            notification={true}
+                            notificationDelay={10}
+                        />
                         <Firefly />
                         <Image
                             src={maldivasImage}
