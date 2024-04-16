@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/fireFly.css'
 import type { AppProps } from 'next/app'
 
 import React, { Suspense } from 'react'
