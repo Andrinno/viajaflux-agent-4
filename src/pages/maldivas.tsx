@@ -152,7 +152,7 @@ export default function Maldivas(params: MaldivasProps) {
                             notificationDelay={10}
                         />
                         <Firefly />
-                        <div className="flex items-start justify-center container gap-12 px-8 py-12 mx-auto md:grid-cols-2 place-items-center md:py-32 max-w-7xl">
+                        <div className="flex items-start justify-center container gap-12 px-8 py-28 mx-auto md:grid-cols-2 place-items-center md:py-32 max-w-7xl">
                             <div
                                 ref={boxRef}
                                 className="flex flex-col items-center gap-6 md:gap-8"
@@ -275,7 +275,7 @@ export default function Maldivas(params: MaldivasProps) {
                     </div>
                 </div>
             )}
-            {isVisible && <Footer />}
+            {isVisible && <Footer address={api.address} />}
 
             {/* Put this part before </body> tag */}
             <input type="checkbox" id="modal_lead" className="modal-toggle" />
