@@ -19,12 +19,26 @@ import { APIdata } from '../../../context/ApiContext'
 import { useContext } from 'react'
 import BlurImage from '../BlurImage'
 
-const Footer = () => {
+interface IFooter {
+    address: string
+}
+
+const Footer = ({ address }: IFooter) => {
     const { api } = useContext(APIdata)
 
     const footerMedia = api.media.filter(
         (media: any) => media.collection_name === 'footer'
     )
+
+    function formatAddress(address: string) {
+        return address.replace(/,/g, '').replace(/ /g, '+')
+    }
+
+    const formattedAddress = formatAddress(address)
+
+    const urlBaseGoogleMaps = 'https://www.google.com/maps'
+
+    const urlMapsAddress = `${urlBaseGoogleMaps}?q=${formattedAddress}&output=embed`
 
     return (
         <>
@@ -54,7 +68,7 @@ const Footer = () => {
 
                     <iframe
                         title="Localização do evento"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.0915328689694!2d-50.44190532321177!3d-21.228218630118455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x949643d13c228045%3A0xa83ad5b94402124!2sAv.%20Bras%C3%ADlia%2C%202121%20-%20Conjunto%20412-B%20-%20Jardim%20Nova%20Yorque%2C%20Ara%C3%A7atuba%20-%20SP%2C%2016015-460!5e0!3m2!1spt-BR!2sbr!4v1705921632821!5m2!1spt-BR!2sbr"
+                        src={urlMapsAddress}
                         className={
                             'w-full h-96 rounded border-primary border-2'
                         }
