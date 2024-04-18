@@ -9,10 +9,11 @@ import BlurImage from '../components/BlurImage'
 import Video from '../components/Player/Video'
 import { InputMask } from '@react-input/mask'
 import Footer from '../components/Footer'
-import Image from 'next/image'
 import maldivasImage from '../assets/images/maldivas.webp'
 import Firefly from '../components/FireFly'
 import { FloatingWhatsApp } from 'react-floating-whatsapp'
+import Destiny from '../components/Destiny'
+import Image from 'next/image'
 
 interface MaldivasProps {
     params: {
@@ -31,6 +32,7 @@ interface MaldivasProps {
 export default function Maldivas(params: MaldivasProps) {
     const {
         api,
+
         loading,
         handleSubmit,
         handleInputChange,
@@ -130,7 +132,13 @@ export default function Maldivas(params: MaldivasProps) {
                 } ${!isVisible && 'h-screen'}`}
             >
                 {isVisible && (
-                    <div id="home">
+                    <div
+                        id="home"
+                        className="max-w-screen bg-black/75 bg-cover bg-no-repeat"
+                        style={{
+                            backgroundImage: `url(${maldivasImage.src})`,
+                        }}
+                    >
                         <FloatingWhatsApp
                             phoneNumber="+5518996505452"
                             accountName="Agência Fly Prime"
@@ -144,21 +152,16 @@ export default function Maldivas(params: MaldivasProps) {
                             notificationDelay={10}
                         />
                         <Firefly />
-                        <Image
-                            src={maldivasImage}
-                            alt="Imagem de Maldivas"
-                            className="max-w-screen bg-black/75 bg-cover bg-no-repeat"
-                        />
-                        <div className="container grid justify-between gap-12 px-8 py-12 mx-auto md:grid-cols-2 place-items-center md:py-32 max-w-7xl">
+                        <div className="flex items-start justify-center container gap-12 px-8 py-12 mx-auto md:grid-cols-2 place-items-center md:py-32 max-w-7xl">
                             <div
                                 ref={boxRef}
-                                className="flex flex-col gap-6 md:gap-12"
+                                className="flex flex-col items-center gap-6 md:gap-8"
                             >
                                 <div>
                                     <h1
                                         style={{ color: api.bg_color }}
                                         className={
-                                            `font-semibold transition-all duration-300 sm:leading-tight text-2xl sm:text-5xl ` +
+                                            `text-2xl md:text-3xl font-bold max-w-4xl md:leading-[42px] text-center ` +
                                             (isContainerOne
                                                 ? 'ml-0'
                                                 : '-ml-[1500px]')
@@ -178,17 +181,13 @@ export default function Maldivas(params: MaldivasProps) {
                                 >
                                     {api.description}
                                 </p>
+                                <div className="max-w-4xl w-full aspect-video box-glow rounded-2xl">
+                                    <Video id={'XUx4UVSXIXE'} />
+                                </div>
 
-                                <CTA
-                                    phone={`${api.country_code}${api.phone}`}
-                                    action_buttons={api.cta}
-                                    popup={api.enable_popup}
-                                    className={
-                                        `btn btn-sm sm:btn-lg w-fit normal-case no-underline transition-all duration-1000 ` +
-                                        (isContainerOne
-                                            ? 'ml-0'
-                                            : '-ml-[1500px]')
-                                    }
+                                <Destiny
+                                    bgColor={api.bg_color}
+                                    color={api.color}
                                 />
                             </div>
                         </div>

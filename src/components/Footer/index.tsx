@@ -43,6 +43,23 @@ const Footer = () => {
                 </div>
             )}
             <div className="w-full bg-base-200">
+                <div
+                    className={
+                        'flex flex-col text-center justify-center items-center align-center gap-6 p-8'
+                    }
+                >
+                    <h2 className={'text-3xl font-semibold'}>
+                        Onde estamos localizados
+                    </h2>
+
+                    <iframe
+                        title="Localização do evento"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.0915328689694!2d-50.44190532321177!3d-21.228218630118455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x949643d13c228045%3A0xa83ad5b94402124!2sAv.%20Bras%C3%ADlia%2C%202121%20-%20Conjunto%20412-B%20-%20Jardim%20Nova%20Yorque%2C%20Ara%C3%A7atuba%20-%20SP%2C%2016015-460!5e0!3m2!1spt-BR!2sbr!4v1705921632821!5m2!1spt-BR!2sbr"
+                        className={
+                            'w-full h-96 rounded border-primary border-2'
+                        }
+                    ></iframe>
+                </div>
                 <footer className="flex flex-wrap justify-between px-8 py-10 mx-auto footer max-w-7xl text-base-content">
                     <div className="flex flex-col justify-between w-6/12 h-full gap-5 md:w-auto">
                         <ul className="flex flex-col w-full gap-4 text-base text-primary">

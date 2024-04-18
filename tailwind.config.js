@@ -20,6 +20,9 @@ module.exports = {
                     ],
                     primary: '#000036',
                     '--rounded-btn': '0',
+                    '.box-glow': {
+                        'box-shadow': '0 0 6px #BF8643, 0 0 12px #BF8643',
+                    },
                 },
                 dark: {
                     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -29,6 +32,9 @@ module.exports = {
                     primary: '#F3F3F3',
                     'primary-content': '#000036',
                     '--rounded-btn': '0',
+                    '.box-glow': {
+                        'box-shadow': '0 0 6px #BF8643, 0 0 12px #BF8643',
+                    },
                 },
             },
         ],
