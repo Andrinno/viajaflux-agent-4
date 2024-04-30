@@ -57,23 +57,25 @@ const Footer = ({ address }: IFooter) => {
                 </div>
             )}
             <div className="w-full bg-base-200">
-                <div
-                    className={
-                        'flex flex-col text-center justify-center items-center align-center gap-6 p-8'
-                    }
-                >
-                    <h2 className={'text-3xl font-semibold'}>
-                        Onde estamos localizados
-                    </h2>
-
-                    <iframe
-                        title="Localização do evento"
-                        src={urlMapsAddress}
+                {api.template === 'maldivas' && (
+                    <div
                         className={
-                            'w-full h-96 rounded border-primary border-2'
+                            'flex flex-col text-center justify-center items-center align-center gap-6 p-8'
                         }
-                    ></iframe>
-                </div>
+                    >
+                        <h2 className={'text-3xl font-semibold'}>
+                            Onde estamos localizados
+                        </h2>
+
+                        <iframe
+                            title="Localização do evento"
+                            src={urlMapsAddress}
+                            className={
+                                'w-full h-96 rounded border-primary border-2'
+                            }
+                        ></iframe>
+                    </div>
+                )}
                 <footer className="flex flex-wrap justify-between px-8 py-10 mx-auto footer max-w-7xl text-base-content">
                     <div className="flex flex-col justify-between w-6/12 h-full gap-5 md:w-auto">
                         <ul className="flex flex-col w-full gap-4 text-base text-primary">
