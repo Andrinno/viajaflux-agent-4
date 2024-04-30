@@ -20,7 +20,7 @@ import { useContext } from 'react'
 import BlurImage from '../BlurImage'
 
 interface IFooter {
-    address: string
+    address?: string
 }
 
 const Footer = ({ address }: IFooter) => {
@@ -34,7 +34,7 @@ const Footer = ({ address }: IFooter) => {
         return address.replace(/,/g, '').replace(/ /g, '+')
     }
 
-    const formattedAddress = formatAddress(address)
+    const formattedAddress = address && formatAddress(address)
 
     const urlBaseGoogleMaps = 'https://www.google.com/maps'
 
