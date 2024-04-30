@@ -40,7 +40,7 @@ const NavBar = (props: INavBar) => {
                         >
                             {props.logo && (
                                 <BlurImage
-                                    src={`http://app.viajaflux.test/${props.logo}`}
+                                    src={`${props.logo}`}
                                     fill
                                     alt="logo"
                                     className="object-contain cursor-pointer"

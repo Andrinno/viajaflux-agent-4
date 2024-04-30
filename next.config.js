@@ -25,7 +25,6 @@ const nextConfig = withPWA({
             'app.viajaflux.test',
             'i.ytimg.com',
             'd207yhzbi4ln8c.cloudfront.net',
-            // 'viajaflux-files.s3.us-west-2.amazonaws.com',
         ],
     },
 })
