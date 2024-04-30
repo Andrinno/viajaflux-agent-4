@@ -22,9 +22,10 @@ interface PassagemInfo {
 interface IDestiny {
     bgColor: string
     color: string
+    number: string
 }
 
-export default function Destiny({ bgColor, color }: IDestiny) {
+export default function Destiny({ bgColor, color, number }: IDestiny) {
     const [loading, setLoading] = useState<boolean>(false)
     const [idaDate, setIdaDate] = useState<Date | null>(null)
     const [isQuotation, setIsQuotation] = useState(true)
@@ -185,6 +186,7 @@ export default function Destiny({ bgColor, color }: IDestiny) {
             dataVolta: voltaDate,
             adultos: quantidadeAdultos,
             gastos,
+            tags: 'site,cotação',
         }
 
         const secondData = {
@@ -198,18 +200,44 @@ export default function Destiny({ bgColor, color }: IDestiny) {
             quantidadeAdultos,
         }
 
+        function formatDate(data: Date) {
+            return data.toLocaleString('pt-BR', {
+                timeZone: 'America/Sao_Paulo',
+            })
+        }
+
+        const idaDateFormatted = idaDate ? formatDate(idaDate) : ''
+        const voltaDateFormatted = voltaDate ? formatDate(voltaDate) : ''
+
+        const linkWhatsapp = `https://api.whatsapp.com/send?phone=${number}&text=Local%20de%20origem:${encodeURIComponent(
+            origemQuery
+        )}%0ALocal%20de%20destino:${encodeURIComponent(
+            destinoQuery
+        )}%0AData%20da%20ida:${encodeURIComponent(
+            idaDateFormatted
+        )}%0AData%20da%20volta:${encodeURIComponent(
+            voltaDateFormatted
+        )}%0ANome:${encodeURIComponent(userName)}%0AE-mail:${encodeURIComponent(
+            userEmail
+        )}%0AWhatsapp:${encodeURIComponent(userWhatsapp)}${
+            gastos && `%0AGasto%20m%C3%A9dio: ${encodeURIComponent(gastos)}`
+        }`
+
         setLoading(true)
 
         try {
-            // Validação dos dados do formulário
             await secondSchema
                 .validate(secondData, { abortEarly: false })
                 .then(async () => {
-                    await fetch('/api/addToList', {
+                    await fetch(`${process.env.NEXT_PUBLIC_API}`, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer 3|1KhHww5k3aKSSfbK3kjqA0i5GBxv20J1Hrm5pmNf60d2356a`,
+                        },
                         body: JSON.stringify(data),
                     })
+
                     setLoading(false)
                     setIsQuotation(true)
                     //clear form
@@ -223,6 +251,8 @@ export default function Destiny({ bgColor, color }: IDestiny) {
                     setQuantidadeAdultos(1)
                     setGastos('')
                     sendWhatsapp()
+
+                    window.open(linkWhatsapp, '_blank')
                 })
         } catch (error) {
             if (error instanceof yup.ValidationError) {
@@ -232,8 +262,12 @@ export default function Destiny({ bgColor, color }: IDestiny) {
                 validationErrors.forEach((message) => {
                     toast.error(message)
                 })
-                setLoading(false)
+            } else {
+                toast.error(
+                    'Ocorreu um erro ao enviar os dados. Por favor, tente novamente mais tarde.'
+                )
             }
+            setLoading(false)
         }
     }
 
@@ -495,8 +529,9 @@ export default function Destiny({ bgColor, color }: IDestiny) {
                 ) : (
                     <div
                         className={
-                            'grid sm:grid-cols-5 gap-4 w-full bg-white/25 backdrop-blur-md p-6 rounded border border-primary border-solid z-10'
+                            'grid sm:grid-cols-5 gap-4 w-full bg-white/25 backdrop-blur-md p-6 rounded border border-solid z-10'
                         }
+                        style={{ borderColor: color }}
                     >
                         <div className="relative flex flex-col gap-1">
                             <h2 className="text-xs font-normal text-white text-left">
@@ -505,7 +540,8 @@ export default function Destiny({ bgColor, color }: IDestiny) {
                             <input
                                 name="name"
                                 id="name"
-                                className="iata input border-primary col-span-1 border w-full text-sm bg-white text-gray-600 max-h-10"
+                                className="iata input col-span-1 border w-full text-sm bg-white text-gray-600 max-h-10"
+                                style={{ borderColor: color }}
                                 value={userName}
                                 onChange={(e) => setUserName(e.target.value)}
                                 placeholder={'Nome'}
@@ -519,7 +555,8 @@ export default function Destiny({ bgColor, color }: IDestiny) {
                             <input
                                 name="email"
                                 id="email"
-                                className="iata input border-primary col-span-1 border w-full text-sm bg-white text-gray-600 max-h-10"
+                                className="iata input col-span-1 border w-full text-sm bg-white text-gray-600 max-h-10"
+                                style={{ borderColor: color }}
                                 value={userEmail}
                                 onChange={(e) => setUserEmail(e.target.value)}
                                 placeholder={'E-mail'}
@@ -539,7 +576,8 @@ export default function Destiny({ bgColor, color }: IDestiny) {
                                 onChange={(e) =>
                                     setUserWhatsapp(e.target.value)
                                 }
-                                className="iata input border-primary col-span-1 border w-full text-sm bg-white text-gray-600 max-h-10"
+                                className="iata input col-span-1 border w-full text-sm bg-white text-gray-600 max-h-10"
+                                style={{ borderColor: color }}
                                 placeholder="(XX) 9XXXX-XXXX"
                             />
                         </div>
@@ -551,7 +589,8 @@ export default function Destiny({ bgColor, color }: IDestiny) {
                             <select
                                 name="gasto"
                                 id="gasto"
-                                className="iata input border-primary col-span-1 border w-full text-sm bg-white text-gray-600 max-h-10"
+                                className="iata input col-span-1 border w-full text-sm bg-white text-gray-600 max-h-10"
+                                style={{ borderColor: color }}
                                 onChange={(e) => handleGastos(e)}
                             >
                                 <option value="">Não Opinar</option>
@@ -571,9 +610,8 @@ export default function Destiny({ bgColor, color }: IDestiny) {
                         </div>
 
                         <button
-                            className={
-                                'btn btn-primary rounded self-end text-white'
-                            }
+                            style={{ backgroundColor: bgColor }}
+                            className={'btn rounded self-end text-white'}
                             onClick={handleQuotation}
                         >
                             Ver cotação
