@@ -122,7 +122,14 @@ const Home = ({
             whatsapp,
         },
     }
-    return api?.id && <Maldivas params={params} />
+
+    const isMaldivasTheme = api.template === 'maldivas'
+
+    return isMaldivasTheme ? (
+        <Maldivas params={params} />
+    ) : (
+        api?.id && <Monaco params={params} />
+    )
 }
 
 export default Home
