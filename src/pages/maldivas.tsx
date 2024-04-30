@@ -13,7 +13,6 @@ import maldivasImage from '../assets/images/maldivas.webp'
 import Firefly from '../components/FireFly'
 import { FloatingWhatsApp } from 'react-floating-whatsapp'
 import Destiny from '../components/Destiny'
-import Image from 'next/image'
 
 interface MaldivasProps {
     params: {
@@ -32,7 +31,6 @@ interface MaldivasProps {
 export default function Maldivas(params: MaldivasProps) {
     const {
         api,
-
         loading,
         handleSubmit,
         handleInputChange,
@@ -188,6 +186,7 @@ export default function Maldivas(params: MaldivasProps) {
                                 <Destiny
                                     bgColor={api.bg_color}
                                     color={api.color}
+                                    number={api.phone}
                                 />
                             </div>
                         </div>
