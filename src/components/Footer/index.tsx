@@ -50,7 +50,7 @@ const Footer = ({ address }: IFooter) => {
                                 alt="Imagem do rodapé"
                                 fill
                                 src={footerMedia[0]?.original_url}
-                                className="object-contain object-top lg:object-cover rounded-xl"
+                                className="object-contain object-top rounded-xl"
                             />
                         )}
                     </div>

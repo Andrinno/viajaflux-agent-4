@@ -256,7 +256,7 @@ export default function Monaco(params: MonacoProps) {
                                         src={featuredMedia[0].original_url}
                                         fill
                                         alt="Produto em destaque"
-                                        className="object-contain object-top lg:object-cover rounded-xl"
+                                        className="object-contain object-top rounded-xl"
                                     />
                                 )}
                         </div>
