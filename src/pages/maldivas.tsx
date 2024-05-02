@@ -9,10 +9,10 @@ import BlurImage from '../components/BlurImage'
 import Video from '../components/Player/Video'
 import { InputMask } from '@react-input/mask'
 import Footer from '../components/Footer'
-import maldivasImage from '../assets/images/maldivas.webp'
 import Firefly from '../components/FireFly'
 import { FloatingWhatsApp } from 'react-floating-whatsapp'
 import Destiny from '../components/Destiny'
+import Image from 'next/image'
 
 interface MaldivasProps {
     params: {
@@ -130,13 +130,17 @@ export default function Maldivas(params: MaldivasProps) {
                 } ${!isVisible && 'h-screen'}`}
             >
                 {isVisible && (
-                    <div
-                        id="home"
-                        className="max-w-screen bg-black/75 bg-cover bg-no-repeat"
-                        style={{
-                            backgroundImage: `url(${maldivasImage.src})`,
-                        }}
-                    >
+                    <div id="home" className="relative">
+                        <Image
+                            fill
+                            src={mainMedia[0]?.original_url}
+                            alt="Imagem de fundo"
+                            quality={100}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                            }}
+                        />
                         <FloatingWhatsApp
                             phoneNumber="+5518996505452"
                             accountName="Agência Fly Prime"
