@@ -45,7 +45,6 @@ export default function Maldivas(params: MaldivasProps) {
     const [isContainerOne, setIsContainerOne] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
     const [mainMedia, setMainMedia] = useState<any>([])
-    console.log('mainMedia :', mainMedia)
     const [featuredMedia, setFeaturedMedia] = useState<any>([])
     const boxRef = useRef<HTMLDivElement | null>(null)
     const { videoTime } = useContext(APIdata)
