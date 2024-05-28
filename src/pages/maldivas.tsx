@@ -45,6 +45,7 @@ export default function Maldivas(params: MaldivasProps) {
     const [isContainerOne, setIsContainerOne] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
     const [mainMedia, setMainMedia] = useState<any>([])
+    console.log('mainMedia :', mainMedia)
     const [featuredMedia, setFeaturedMedia] = useState<any>([])
     const boxRef = useRef<HTMLDivElement | null>(null)
     const { videoTime } = useContext(APIdata)
@@ -132,14 +133,12 @@ export default function Maldivas(params: MaldivasProps) {
                 {isVisible && (
                     <div id="home" className="relative">
                         <Image
-                            fill
                             src={mainMedia[0]?.original_url}
                             alt="Imagem de fundo"
                             quality={100}
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                            }}
+                            sizes="800px"
+                            fill
+                            className="object-cover md:object-fill"
                         />
                         <FloatingWhatsApp
                             phoneNumber="+5518996505452"

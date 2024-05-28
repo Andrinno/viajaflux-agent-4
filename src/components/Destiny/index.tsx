@@ -28,7 +28,7 @@ interface IDestiny {
 export default function Destiny({ bgColor, color, number }: IDestiny) {
     const [loading, setLoading] = useState<boolean>(false)
     const [idaDate, setIdaDate] = useState<Date | null>(null)
-    const [isQuotation, setIsQuotation] = useState(true)
+    const [isQuotation, setIsQuotation] = useState(false)
     const [voltaDate, setVoltaDate] = useState<Date | null>(null)
     const [userName, setUserName] = useState<string>('')
     const [userEmail, setUserEmail] = useState<string>('')
@@ -79,17 +79,6 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
                 /^\(\d{2}\) \d{5}-\d{4}$/,
                 'Por favor, informe um número de telefone válido (exemplo: (99) 99999-9999).'
             ),
-        origemQuery: yup
-            .string()
-            .required('Por favor, informe o local de origem.'),
-        destinoQuery: yup
-            .string()
-            .required('Por favor, informe o local de destino.'),
-        idaDate: yup.date().required('Por favor, informe a data de ida.'),
-        voltaDate: yup.date().required('Por favor, informe a data de volta.'),
-        quantidadeAdultos: yup
-            .number()
-            .required('Por favor, informe a quantidade de adultos.'),
     })
 
     const isDateValid = (date: Date | null): boolean => {
@@ -137,7 +126,7 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
 
                     const novoTextoPassagem = `
                     Olá, sou ${userName} e gostaria de cotar a seguinte passagem:
-        
+
                     Origem: ${passagemInfo.origemQuery}
                     Destino: ${passagemInfo.destinoQuery}
                     Data de ida: ${
@@ -200,24 +189,9 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
             quantidadeAdultos,
         }
 
-        function formatDate(data: Date) {
-            return data.toLocaleString('pt-BR', {
-                timeZone: 'America/Sao_Paulo',
-            })
-        }
-
-        const idaDateFormatted = idaDate ? formatDate(idaDate) : ''
-        const voltaDateFormatted = voltaDate ? formatDate(voltaDate) : ''
-
-        const linkWhatsapp = `https://api.whatsapp.com/send?phone=${number}&text=Local%20de%20origem:${encodeURIComponent(
-            origemQuery
-        )}%0ALocal%20de%20destino:${encodeURIComponent(
-            destinoQuery
-        )}%0AData%20da%20ida:${encodeURIComponent(
-            idaDateFormatted
-        )}%0AData%20da%20volta:${encodeURIComponent(
-            voltaDateFormatted
-        )}%0ANome:${encodeURIComponent(userName)}%0AE-mail:${encodeURIComponent(
+        const linkWhatsapp = `https://api.whatsapp.com/send?phone=+55${number}&text=Nome:${encodeURIComponent(
+            userName
+        )}%0AE-mail:${encodeURIComponent(
             userEmail
         )}%0AWhatsapp:${encodeURIComponent(userWhatsapp)}${
             gastos && `%0AGasto%20m%C3%A9dio: ${encodeURIComponent(gastos)}`
@@ -239,7 +213,6 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
                     })
 
                     setLoading(false)
-                    setIsQuotation(true)
                     //clear form
                     setUserName('')
                     setUserEmail('')
@@ -349,11 +322,11 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
             >
                 <span
                     className={
-                        'text-sm md:text-xl text-center font-light text-white'
+                        'text-sm md:text-xl text-center font-light text-white z-10'
                     }
                 >
-                    Preencha o destino e data para enviarmos uma cotação
-                    personalizada!
+                    Preencha seus dados e ganhe uma cotação personalizada com um
+                    desconto especial!
                 </span>
 
                 {isQuotation ? (
@@ -533,7 +506,7 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
                         }
                         style={{ borderColor: color }}
                     >
-                        <div className="relative flex flex-col gap-1">
+                        <div className="flex flex-col gap-1">
                             <h2 className="text-xs font-normal text-white text-left">
                                 Nome
                             </h2>
@@ -548,7 +521,7 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
                             ></input>
                         </div>
 
-                        <div className="relative flex flex-col gap-1">
+                        <div className="flex flex-col gap-1">
                             <h2 className="text-xs font-normal text-white text-left">
                                 E-mail
                             </h2>
@@ -563,7 +536,7 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
                             ></input>
                         </div>
 
-                        <div className="relative flex flex-col gap-1">
+                        <div className="flex flex-col gap-1">
                             <h2 className="text-xs font-normal text-white text-left">
                                 Whatsapp
                             </h2>
@@ -582,7 +555,7 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
                             />
                         </div>
 
-                        <div className="relative flex flex-col gap-1">
+                        <div className="flex flex-col gap-1">
                             <h2 className="text-xs font-normal text-white text-left">
                                 Gasto médio
                             </h2>
@@ -611,7 +584,7 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
 
                         <button
                             style={{ backgroundColor: bgColor }}
-                            className={'btn rounded self-end text-white'}
+                            className={'btn rounded self-end text-white mb-1'}
                             onClick={handleQuotation}
                         >
                             Ver cotação
