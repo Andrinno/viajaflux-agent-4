@@ -41,6 +41,7 @@ const NavBar = (props: INavBar) => {
                             {props.logo && (
                                 <BlurImage
                                     src={`${props.logo}`}
+                                    sizes="100px"
                                     fill
                                     alt="logo"
                                     className="object-contain cursor-pointer"

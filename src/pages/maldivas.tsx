@@ -132,14 +132,12 @@ export default function Maldivas(params: MaldivasProps) {
                 {isVisible && (
                     <div id="home" className="relative">
                         <Image
-                            fill
                             src={mainMedia[0]?.original_url}
                             alt="Imagem de fundo"
                             quality={100}
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                            }}
+                            sizes="800px"
+                            fill
+                            className="object-cover md:object-fill"
                         />
                         <FloatingWhatsApp
                             phoneNumber="+5518996505452"

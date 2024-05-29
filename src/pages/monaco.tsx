@@ -172,6 +172,7 @@ export default function Monaco(params: MonacoProps) {
                                 {mainMedia[0]?.original_url && (
                                     <BlurImage
                                         src={mainMedia[0].original_url}
+                                        sizes="300px"
                                         fill
                                         alt="banner"
                                         className="object-contain object-top lg:object-cover rounded-xl"
