@@ -125,7 +125,7 @@ export default function Monaco(params: MonacoProps) {
                 } ${!isVisible && 'h-screen'}`}
             >
                 {isVisible && (
-                    <div id="home" className="bg-base-200">
+                    <div id="home" className="bg-base-200 pt-14 md:pt-0">
                         <div className="container grid justify-between gap-12 px-8 py-12 mx-auto md:grid-cols-2 place-items-center md:py-32 max-w-7xl">
                             <div
                                 ref={boxRef}
