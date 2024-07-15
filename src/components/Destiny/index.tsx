@@ -207,7 +207,7 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            Authorization: `Bearer 3|1KhHww5k3aKSSfbK3kjqA0i5GBxv20J1Hrm5pmNf60d2356a`,
+                            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
                         },
                         body: JSON.stringify(data),
                     })
