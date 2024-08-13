@@ -103,7 +103,7 @@ export default function Maldivas(params: MaldivasProps) {
     return (
         <Theme dataTheme={api.theme}>
             <Head>
-                <title>{`${api.team.name ?? 'Agente'} - ViajaFlux`}</title>
+                <title>{`${api.team.name ?? 'Agência de Viagens'}`}</title>
                 <meta
                     name={'description'}
                     content={
@@ -112,6 +112,16 @@ export default function Maldivas(params: MaldivasProps) {
                             : 'ViajaFlux é a única plataforma com modelo de programa de fidelidade próprio que você lucra sem vender passagens e pacotes.'
                     }
                 />
+
+                <script id="google-analytics">
+                    {`
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                            gtag('js', new Date());
+
+                            gtag('config', '${api.ga_tracking_id}');
+                        `}
+                </script>
             </Head>
             {isVisible && (
                 <NavBar
@@ -189,6 +199,7 @@ export default function Maldivas(params: MaldivasProps) {
                                     bgColor={api.bg_color}
                                     color={api.color}
                                     number={api.phone}
+                                    cta={api.cta}
                                 />
                             </div>
                         </div>

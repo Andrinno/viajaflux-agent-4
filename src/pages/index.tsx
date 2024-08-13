@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import { toast } from 'react-toastify'
 import Monaco from './monaco'
 import Maldivas from './maldivas'
+import fb from '../utils/fb'
 
 export const getServerSideProps: GetServerSideProps<{
     data: IData
@@ -39,11 +40,24 @@ export const getServerSideProps: GetServerSideProps<{
 const Home = ({
     data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    const { api, setApi } = useContext(APIdata)
+    const { api, setApi, eventId } = useContext(APIdata)
 
     useEffect(() => {
         setApi(data)
     }, [data, setApi])
+
+    useEffect(() => {
+        if (eventId) {
+            if (process.env.NODE_ENV === 'production') {
+                fb(
+                    api.fb_pixel_id,
+                    api.fb_access_token,
+                    'PageView',
+                    'PageView' + eventId
+                ).then((r) => r)
+            }
+        }
+    }, [eventId])
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -88,6 +102,19 @@ const Home = ({
                             },
                             body: JSON.stringify({ name, email, whatsapp }),
                         })
+
+                        if (process.env.NODE_ENV === 'production') {
+                            fb(
+                                api.fb_pixel_id,
+                                api.fb_access_token,
+                                'Lead',
+                                'Lead' + eventId,
+                                name,
+                                email,
+                                whatsapp
+                            ).then((r) => r)
+                        }
+
                         setLoading(false)
                     }
                     window.location.href = `https://wa.me/${api.country_code}${api.phone}`
@@ -125,11 +152,9 @@ const Home = ({
 
     const isMaldivasTheme = api.template === 'maldivas'
 
-    return isMaldivasTheme ? (
-        <Maldivas params={params} />
-    ) : (
-        api?.id && <Monaco params={params} />
-    )
+    return !isMaldivasTheme
+        ? api?.id && <Maldivas params={params} />
+        : api?.id && <Monaco params={params} />
 }
 
 export default Home

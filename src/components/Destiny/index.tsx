@@ -23,9 +23,10 @@ interface IDestiny {
     bgColor: string
     color: string
     number: string
+    cta: string
 }
 
-export default function Destiny({ bgColor, color, number }: IDestiny) {
+export default function Destiny({ bgColor, color, number, cta }: IDestiny) {
     const [loading, setLoading] = useState<boolean>(false)
     const [idaDate, setIdaDate] = useState<Date | null>(null)
     const [isQuotation, setIsQuotation] = useState(false)
@@ -587,7 +588,7 @@ export default function Destiny({ bgColor, color, number }: IDestiny) {
                             className={'btn rounded self-end text-white mb-1'}
                             onClick={handleQuotation}
                         >
-                            Ver cotação
+                            {cta}
                         </button>
                     </div>
                 )}

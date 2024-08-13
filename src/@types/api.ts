@@ -65,6 +65,9 @@ interface IData {
     updated_at: string
     media: Media[]
     team: Team
+    ga_tracking_id: string | null
+    fb_pixel_id: string | null
+    fb_access_token: string | null
 }
 
 export default IData

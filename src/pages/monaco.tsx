@@ -98,7 +98,7 @@ export default function Monaco(params: MonacoProps) {
     return (
         <Theme dataTheme={api.theme}>
             <Head>
-                <title>{`${api.team.name ?? 'Agente'} - ViajaFlux`}</title>
+                <title>{`${api.team.name ?? 'Agência de Viagens'}`}</title>
                 <meta
                     name={'description'}
                     content={
@@ -107,6 +107,16 @@ export default function Monaco(params: MonacoProps) {
                             : 'ViajaFlux é a única plataforma com modelo de programa de fidelidade próprio que você lucra sem vender passagens e pacotes.'
                     }
                 />
+
+                <script id="google-analytics">
+                    {`
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                            gtag('js', new Date());
+
+                            gtag('config', '${api.ga_tracking_id}');
+                        `}
+                </script>
             </Head>
             {isVisible && (
                 <NavBar
@@ -175,7 +185,7 @@ export default function Monaco(params: MonacoProps) {
                                         sizes="300px"
                                         fill
                                         alt="banner"
-                                        className="object-contain object-top lg:object-cover rounded-xl"
+                                        className="object-contain object-top rounded-xl"
                                     />
                                 )}
                             </div>
