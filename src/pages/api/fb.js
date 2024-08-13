@@ -1,5 +1,3 @@
-const crypto = require('crypto')
-
 export default async function handler(req, res) {
     const { event_id, event_source_url, event_name } = req.body
 
