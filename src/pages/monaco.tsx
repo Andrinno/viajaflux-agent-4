@@ -107,16 +107,6 @@ export default function Monaco(params: MonacoProps) {
                             : 'ViajaFlux é a única plataforma com modelo de programa de fidelidade próprio que você lucra sem vender passagens e pacotes.'
                     }
                 />
-
-                <script id="google-analytics">
-                    {`
-                            window.dataLayer = window.dataLayer || [];
-                            function gtag(){dataLayer.push(arguments);}
-                            gtag('js', new Date());
-
-                            gtag('config', '${api.ga_tracking_id}');
-                        `}
-                </script>
             </Head>
             {isVisible && (
                 <NavBar
@@ -126,8 +116,10 @@ export default function Monaco(params: MonacoProps) {
                     phone={`${api.country_code}${api.phone}`}
                     email={api.email}
                     enable_popup={api.enable_popup}
+                    hasVideo={!!(api.video && api.video.includes('youtube'))}
                 />
             )}
+
             <div
                 id="vsl_mode"
                 className={`flex ${

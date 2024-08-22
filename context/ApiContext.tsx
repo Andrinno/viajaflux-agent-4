@@ -9,9 +9,25 @@ export default function ApiContext({ children }: any) {
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15)
 
+    const [tags, setTags] = useState<string>('')
+    const [funnel, setFunnel] = useState<number>()
+    const [price, setPrice] = useState<number>(0)
+
     return (
         <APIdata.Provider
-            value={{ api, setApi, videoTime, setVideoTime, eventId }}
+            value={{
+                api,
+                setApi,
+                videoTime,
+                setVideoTime,
+                eventId,
+                tags,
+                setTags,
+                funnel,
+                setFunnel,
+                price,
+                setPrice,
+            }}
         >
             {children}
         </APIdata.Provider>

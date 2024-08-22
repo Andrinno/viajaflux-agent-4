@@ -79,14 +79,16 @@ const Footer = ({ address }: IFooter) => {
                 <footer className="flex flex-wrap justify-between px-8 py-10 mx-auto footer max-w-7xl text-base-content">
                     <div className="flex flex-col justify-between w-6/12 h-full gap-5 md:w-auto">
                         <ul className="flex flex-col w-full gap-4 text-base text-primary">
-                            <li>
-                                <a
-                                    className="active:text-warning"
-                                    href="#quem-somos"
-                                >
-                                    Quem somos
-                                </a>
-                            </li>
+                            {api.video && api.video.includes('youtube') && (
+                                <li>
+                                    <a
+                                        className="active:text-warning"
+                                        href="#quem-somos"
+                                    >
+                                        Quem somos
+                                    </a>
+                                </li>
+                            )}
                             <li>
                                 <a
                                     className="active:text-warning"

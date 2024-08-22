@@ -13,6 +13,7 @@ interface INavBar {
     phone: string
     email: string
     enable_popup?: boolean
+    hasVideo?: boolean
 }
 
 const NavBar = (props: INavBar) => {
@@ -52,14 +53,16 @@ const NavBar = (props: INavBar) => {
 
                     <div className="hidden navbar-center md:flex">
                         <ul className="p-0 menu menu-horizontal">
-                            <li>
-                                <a
-                                    className="active:text-warning"
-                                    href="#quem-somos"
-                                >
-                                    Quem somos
-                                </a>
-                            </li>
+                            {props.hasVideo && (
+                                <li>
+                                    <a
+                                        className="active:text-warning"
+                                        href="#quem-somos"
+                                    >
+                                        Quem somos
+                                    </a>
+                                </li>
+                            )}
                             <li>
                                 <a
                                     className="active:text-warning"

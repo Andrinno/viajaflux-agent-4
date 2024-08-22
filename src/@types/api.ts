@@ -33,6 +33,11 @@ interface Team {
 }
 
 interface IData {
+    google: boolean
+    facebook: boolean
+    board_id(board_id: any): unknown
+    ticket(ticket: any): unknown
+    tags(tags: any): unknown
     id: number
     team_id: number
     subdomain: string
@@ -65,9 +70,10 @@ interface IData {
     updated_at: string
     media: Media[]
     team: Team
-    ga_tracking_id: string | null
-    fb_pixel_id: string | null
-    fb_access_token: string | null
+    analytics: string | null
+    gtm: string | null
+    pixel_id: string | null
+    token: string | null
 }
 
 export default IData

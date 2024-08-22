@@ -7,6 +7,8 @@ import { toast } from 'react-toastify'
 import Monaco from './monaco'
 import Maldivas from './maldivas'
 import fb from '../utils/fb'
+import Head from 'next/head'
+import Script from 'next/script'
 
 export const getServerSideProps: GetServerSideProps<{
     data: IData
@@ -40,10 +42,28 @@ export const getServerSideProps: GetServerSideProps<{
 const Home = ({
     data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    const { api, setApi, eventId } = useContext(APIdata)
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [whatsapp, setWhatsapp] = useState('')
+    const [loading, setLoading] = useState(false)
+
+    const {
+        api,
+        setApi,
+        eventId,
+        tags,
+        funnel,
+        setFunnel,
+        price,
+        setPrice,
+        setTags,
+    } = useContext(APIdata)
 
     useEffect(() => {
         setApi(data)
+        setTags(data.tags)
+        setPrice(data.ticket)
+        setFunnel(data.board_id)
     }, [data, setApi])
 
     const [utmObj, setUtmObj] = useState({
@@ -58,8 +78,8 @@ const Home = ({
         if (eventId) {
             if (process.env.NODE_ENV === 'production') {
                 fb(
-                    api.fb_pixel_id,
-                    api.fb_access_token,
+                    api.pixel_id,
+                    api.token,
                     'PageView',
                     'PageView' + eventId
                 ).then((r) => r)
@@ -75,11 +95,6 @@ const Home = ({
             utm_content: urlParams.get('utm_content') || '',
         })
     }, [eventId])
-
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [whatsapp, setWhatsapp] = useState('')
-    const [loading, setLoading] = useState(false)
 
     const schema = yup.object().shape({
         name: yup.string().required('Por favor, informe o seu nome.'),
@@ -117,13 +132,19 @@ const Home = ({
                                 'Content-Type': 'application/json',
                                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
                             },
-                            body: JSON.stringify({ name, email, whatsapp }),
+                            body: JSON.stringify({
+                                name,
+                                email,
+                                whatsapp,
+                                tags,
+                                price,
+                                funnel,
+                            }),
                         })
-
                         if (process.env.NODE_ENV === 'production') {
                             fb(
-                                api.fb_pixel_id,
-                                api.fb_access_token,
+                                api.pixel_id,
+                                api.token,
                                 'Lead',
                                 'Lead' + eventId,
                                 name,
@@ -137,6 +158,7 @@ const Home = ({
                     window.location.href = `https://wa.me/${api.country_code}${api.phone}`
                 })
         } catch (error) {
+            console.log(error)
             if (error instanceof yup.ValidationError) {
                 const validationErrors = error.inner.map(
                     (error) => error.message
@@ -169,9 +191,37 @@ const Home = ({
 
     const isMaldivasTheme = api.template === 'maldivas'
 
-    return isMaldivasTheme
-        ? api?.id && <Maldivas params={params} />
-        : api?.id && <Monaco params={params} />
+    return (
+        <>
+            <Head>
+                {api.google && api.gtm && (
+                    <Script id="google-gtm">
+                        {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                    })(window,document,'script','dataLayer',${api.gtm});
+                    `}
+                    </Script>
+                )}
+
+                {api.google && api.analytics && (
+                    <Script id="google-analytics">
+                        {`
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                            gtag('js', new Date());
+
+                            gtag('config', '${api.analytics}');
+                        `}
+                    </Script>
+                )}
+            </Head>
+            {isMaldivasTheme
+                ? api?.id && <Maldivas params={params} />
+                : api?.id && <Monaco params={params} />}
+        </>
+    )
 }
 
 export default Home
