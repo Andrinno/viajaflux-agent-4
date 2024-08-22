@@ -113,6 +113,7 @@ export default function Maldivas(params: MaldivasProps) {
                     }
                 />
             </Head>
+
             {isVisible && (
                 <NavBar
                     onColor={navbar}
