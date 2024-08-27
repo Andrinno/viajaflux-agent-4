@@ -24,9 +24,16 @@ interface IDestiny {
     color: string
     number: string
     cta: string
+    isVisible?: boolean
 }
 
-export default function Destiny({ bgColor, color, number, cta }: IDestiny) {
+export default function Destiny({
+    bgColor,
+    color,
+    number,
+    cta,
+    isVisible = true,
+}: IDestiny) {
     const [loading, setLoading] = useState<boolean>(false)
     const [idaDate, setIdaDate] = useState<Date | null>(null)
     const [isQuotation, setIsQuotation] = useState(false)
@@ -306,7 +313,7 @@ export default function Destiny({ bgColor, color, number, cta }: IDestiny) {
     }
 
     return (
-        <>
+        <div className={`${!isVisible ? 'opacity-0' : 'opacity-100'}`}>
             <ToastContainer />
 
             <ModalDefault ref={ref} onClose={onClose}>
@@ -317,14 +324,13 @@ export default function Destiny({ bgColor, color, number, cta }: IDestiny) {
 
             <div
                 className={
-                    'pb-12 mt-8 flex flex-col mx-auto p-3 text-center gap-4 max-w-6xl items-center'
+                    'flex flex-col mx-auto p-3 text-center gap-4 max-w-6xl items-center'
                 }
                 id="emitir-passagens"
             >
                 <span
-                    className={
-                        'text-sm md:text-xl text-center font-light text-white z-10'
-                    }
+                    className={'text-sm md:text-xl text-center font-light z-10'}
+                    style={{ color: bgColor }}
                 >
                     Preencha seus dados e ganhe uma cotação personalizada com um
                     desconto especial!
@@ -338,7 +344,7 @@ export default function Destiny({ bgColor, color, number, cta }: IDestiny) {
                         }
                     >
                         <div className="relative flex flex-col gap-1">
-                            <h2 className="text-xs font-normal text-white text-left">
+                            <h2 className="text-xs font-normal text-left">
                                 Local de origem
                             </h2>
 
@@ -508,7 +514,7 @@ export default function Destiny({ bgColor, color, number, cta }: IDestiny) {
                         style={{ borderColor: color }}
                     >
                         <div className="flex flex-col gap-1">
-                            <h2 className="text-xs font-normal text-white text-left">
+                            <h2 className="text-xs font-normal text-left">
                                 Nome
                             </h2>
                             <input
@@ -523,7 +529,7 @@ export default function Destiny({ bgColor, color, number, cta }: IDestiny) {
                         </div>
 
                         <div className="flex flex-col gap-1">
-                            <h2 className="text-xs font-normal text-white text-left">
+                            <h2 className="text-xs font-normal text-left">
                                 E-mail
                             </h2>
                             <input
@@ -538,7 +544,7 @@ export default function Destiny({ bgColor, color, number, cta }: IDestiny) {
                         </div>
 
                         <div className="flex flex-col gap-1">
-                            <h2 className="text-xs font-normal text-white text-left">
+                            <h2 className="text-xs font-normal text-left">
                                 Whatsapp
                             </h2>
                             <InputMask
@@ -557,8 +563,8 @@ export default function Destiny({ bgColor, color, number, cta }: IDestiny) {
                         </div>
 
                         <div className="flex flex-col gap-1">
-                            <h2 className="text-xs font-normal text-white text-left">
-                                Gasto médio
+                            <h2 className="text-xs font-normal text-left">
+                                Gasto cartão de crédito
                             </h2>
                             <select
                                 name="gasto"
@@ -593,6 +599,6 @@ export default function Destiny({ bgColor, color, number, cta }: IDestiny) {
                     </div>
                 )}
             </div>
-        </>
+        </div>
     )
 }

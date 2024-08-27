@@ -70,9 +70,7 @@ const Footer = ({ address }: IFooter) => {
                         <iframe
                             title="Localização do evento"
                             src={urlMapsAddress}
-                            className={
-                                'w-full h-96 rounded border-primary border-2'
-                            }
+                            className={'w-full h-96 rounded'}
                         ></iframe>
                     </div>
                 )}
@@ -163,10 +161,10 @@ const Footer = ({ address }: IFooter) => {
 
                     <div className="flex flex-col items-center gap-3">
                         <ul className="flex flex-col w-full gap-4 text-base text-primary">
-                            {api.instagram && (
+                            {api.instagram_link && (
                                 <li>
                                     <Link
-                                        href={api.instagram}
+                                        href={api.instagram_link}
                                         className="no-underline active:text-warning"
                                         target={'_blank'}
                                     >
@@ -178,10 +176,10 @@ const Footer = ({ address }: IFooter) => {
                                     </Link>
                                 </li>
                             )}
-                            {api.facebook && (
+                            {api.facebook_link && (
                                 <li>
                                     <Link
-                                        href={api.facebook}
+                                        href={api.facebook_link}
                                         className="no-underline active:text-warning"
                                         target={'_blank'}
                                     >
@@ -193,25 +191,10 @@ const Footer = ({ address }: IFooter) => {
                                     </Link>
                                 </li>
                             )}
-                            {api.youtube && (
+                            {api.linkedin_link && (
                                 <li>
                                     <Link
-                                        href={api.youtube}
-                                        className="no-underline active:text-warning"
-                                        target={'_blank'}
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faYoutube}
-                                            className="w-4 h-4 mr-2"
-                                        />
-                                        Youtube
-                                    </Link>
-                                </li>
-                            )}
-                            {api.linkedin && (
-                                <li>
-                                    <Link
-                                        href={api.linkedin}
+                                        href={api.linkedin_link}
                                         className="no-underline active:text-warning"
                                         target={'_blank'}
                                     >

@@ -13,6 +13,7 @@ import Firefly from '../components/FireFly'
 import { FloatingWhatsApp } from 'react-floating-whatsapp'
 import Destiny from '../components/Destiny'
 import Image from 'next/image'
+import Background from '../assets/images/maldivas.webp'
 
 interface MaldivasProps {
     params: {
@@ -137,107 +138,79 @@ export default function Maldivas(params: MaldivasProps) {
                 </noscript>
             )}
 
-            <div
-                id="vsl_mode"
-                className={`flex ${
-                    !api.vsl_mode ? 'flex-col' : 'flex-col-reverse justify-end'
-                } ${!isVisible && 'h-screen'}`}
-            >
-                {isVisible && (
-                    <div id="home" className="relative">
-                        <Image
-                            src={mainMedia[0]?.original_url}
-                            alt="Imagem de fundo"
-                            quality={100}
-                            sizes="800px"
-                            fill
-                            className="object-cover md:object-fill"
-                        />
-                        <FloatingWhatsApp
-                            phoneNumber="+5518996505452"
-                            accountName="Agência Fly Prime"
-                            placeholder=" Digite uma mensagem"
-                            darkMode={false}
-                            allowClickAway={true}
-                            allowEsc={true}
-                            chatMessage={`Olá! 🤝${'\n'}Como podemos te ajudar?`}
-                            statusMessage="Tempo de resposta: 1 hora"
-                            notification={true}
-                            notificationDelay={10}
-                        />
-                        <Firefly />
-                        <div className="flex items-start justify-center container gap-12 px-8 py-28 mx-auto md:grid-cols-2 place-items-center md:py-32 max-w-7xl">
-                            <div
-                                ref={boxRef}
-                                className="flex flex-col items-center gap-6 md:gap-8"
-                            >
-                                <div>
-                                    <h1
-                                        style={{ color: api.bg_color }}
-                                        className={
-                                            `text-2xl md:text-3xl font-bold max-w-4xl md:leading-[42px] text-center ` +
-                                            (isContainerOne
-                                                ? 'ml-0'
-                                                : '-ml-[1500px]')
-                                        }
-                                    >
-                                        {api.head}
-                                    </h1>
-                                </div>
-
-                                <p
+            <div id="vsl_mode" className={`flex flex-col-reverse justify-end`}>
+                <div id="home" className="relative">
+                    <Image
+                        // src={mainMedia[0]?.original_url}
+                        src={Background}
+                        alt="Imagem de fundo"
+                        quality={60}
+                        fill
+                        className="object-cover md:object-fill"
+                    />
+                    <FloatingWhatsApp
+                        phoneNumber="+5518996505452"
+                        accountName="Agência Fly Prime"
+                        placeholder=" Digite uma mensagem"
+                        darkMode={false}
+                        allowClickAway={true}
+                        allowEsc={true}
+                        chatMessage={`Olá! 🤝${'\n'}Como podemos te ajudar?`}
+                        statusMessage="Tempo de resposta: 1 hora"
+                        notification={true}
+                        notificationDelay={10}
+                    />
+                    <Firefly />
+                    <div className="flex items-start justify-center container gap-12 px-8 mb-12 pt-28 mx-auto md:grid-cols-2 place-items-center md:pt-32 max-w-7xl">
+                        <div
+                            ref={boxRef}
+                            className="flex flex-col items-center gap-6 md:gap-8 z-10"
+                        >
+                            <div>
+                                <h1
+                                    style={{ color: api.bg_color }}
                                     className={
-                                        'text-base text-justify md:text-xl normal-case transition-all duration-700 max-w-3xl ' +
+                                        `text-2xl md:text-3xl font-bold max-w-4xl md:leading-[42px] text-center ` +
                                         (isContainerOne
                                             ? 'ml-0'
                                             : '-ml-[1500px]')
                                     }
                                 >
-                                    {api.description}
-                                </p>
-                                <div className="max-w-4xl w-full aspect-video box-glow rounded-2xl">
-                                    <Video id={'XUx4UVSXIXE'} />
-                                </div>
-
-                                <Destiny
-                                    bgColor={api.bg_color}
-                                    color={api.color}
-                                    number={api.phone}
-                                    cta={api.cta}
-                                />
+                                    {api.head}
+                                </h1>
                             </div>
-                        </div>
-                    </div>
-                )}
-                {api.video && api.video.includes('youtube') && (
-                    <div
-                        id="quem-somos"
-                        className={`container mx-auto flex ${
-                            isVisible ? 'pt-32 pb-12' : 'py-14'
-                        } px-8 flex-col justify-center items-center bg-base-100`}
-                    >
-                        <h2
-                            className="mb-8 text-4xl font-semibold text-center"
-                            style={{ color: api.bg_color }}
-                        >
-                            {isVisible ? api.team.name : api.head}
-                        </h2>
 
-                        {/*<div className="relative w-full h-full overflow-hidden rounded-xl">*/}
-                        <div className="max-w-4xl w-full aspect-video box-glow rounded-2xl">
-                            <Video id={extractVideo(api.video)} />
-                        </div>
+                            <p
+                                className={
+                                    'text-base text-justify md:text-xl normal-case transition-all duration-700 max-w-3xl ' +
+                                    (isContainerOne ? 'ml-0' : '-ml-[1500px]')
+                                }
+                            >
+                                {api.description}
+                            </p>
+                            <div className="max-w-4xl w-full aspect-video box-glow rounded-2xl">
+                                {!api.video ? (
+                                    <BlurImage
+                                        src={mainMedia[0]?.original_url}
+                                        fill
+                                        alt="Vídeo de introdução"
+                                        className="object-cover object-top rounded-xl"
+                                    />
+                                ) : (
+                                    <Video id={extractVideo(api.video)} />
+                                )}
+                            </div>
 
-                        {isVisible && (
-                            <CTA
-                                phone={`${api.country_code}${api.phone}`}
-                                action_buttons={api.cta}
-                                popup={api.enable_popup}
-                                className={'w-64 mt-10 no-underline'}
+                            <Destiny
+                                bgColor={api.bg_color}
+                                color={api.color}
+                                number={api.phone}
+                                cta={api.cta}
+                                isVisible={isVisible}
                             />
-                        )}
+                        </div>
                     </div>
-                )}
+                </div>
             </div>
 
             {isVisible && (

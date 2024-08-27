@@ -126,6 +126,7 @@ const Home = ({
                 .validate({ name, email, whatsapp }, { abortEarly: false })
                 .then(async () => {
                     if (process.env.NEXT_PUBLIC_API) {
+                        console.log(process.env.NEXT_PUBLIC_API)
                         await fetch(process.env.NEXT_PUBLIC_API, {
                             method: 'POST',
                             headers: {
@@ -155,7 +156,7 @@ const Home = ({
 
                         setLoading(false)
                     }
-                    window.location.href = `https://wa.me/${api.country_code}${api.phone}`
+                    // window.location.href = `https://wa.me/${api.country_code}${api.phone}`
                 })
         } catch (error) {
             console.log(error)
@@ -169,7 +170,7 @@ const Home = ({
                 setLoading(false)
             } else {
                 setLoading(false)
-                window.location.href = `https://wa.me/${api.country_code}${api.phone}`
+                // window.location.href = `https://wa.me/${api.country_code}${api.phone}`
             }
         }
     }
