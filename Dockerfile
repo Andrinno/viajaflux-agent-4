@@ -1,58 +1,54 @@
-FROM node:20-alpine AS base
+# /docker/Dockerfile
+FROM node:18-alpine AS base
 
-### Dependencies ###
+# 1. Install dependencies only when needed
 FROM base AS deps
-RUN apk add --no-cache libc6-compat git
-
-# Setup pnpm environment
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-RUN corepack prepare pnpm@latest --activate
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm install
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
-# Builder
+
+# 2. Rebuild the source code only when needed
 FROM base AS builder
-
 WORKDIR /app
-
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
 
-### Production image runner ###
+RUN yarn build
+
+# 3. Production image, copy all the files and run next
 FROM base AS runner
+ARG DATABASE_URL
+ARG NEXTAUTH_SECRET
+WORKDIR /app
 
-# Set NODE_ENV to production
 ENV NODE_ENV=production
 
-# Disable Next.js telemetry
-# Learn more here: https://nextjs.org/telemetry
-ENV NEXT_TELEMETRY_DISABLED=1
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
 
-# Set correct permissions for nextjs user and don't run as root
-RUN addgroup nodejs
-RUN adduser -SDH nextjs
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+COPY --from=builder /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
 
 USER nextjs
 
-# Exposed port (for orchestrators and dynamic reverse proxies)
 EXPOSE 3000
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "wget", "-q0", "http://localhost:3000/health" ]
 
-# Run the nextjs app
+ENV PORT=3000
+
 CMD ["node", "server.js"]
