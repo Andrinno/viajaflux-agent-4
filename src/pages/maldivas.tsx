@@ -149,8 +149,8 @@ export default function Maldivas(params: MaldivasProps) {
                         className="object-cover md:object-fill"
                     />
                     <FloatingWhatsApp
-                        phoneNumber="+5518996505452"
-                        accountName="Agência Fly Prime"
+                        phoneNumber={`+${api.country_code}${api.phone}`}
+                        accountName={`${api.team.name ?? 'Agência de Viagens'}`}
                         placeholder=" Digite uma mensagem"
                         darkMode={false}
                         allowClickAway={true}

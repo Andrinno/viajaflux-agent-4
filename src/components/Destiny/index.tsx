@@ -98,7 +98,7 @@ export default function Destiny({
     const [textoPassagem, setTextoPassagem] = useState<string>('')
 
     function sendWhatsapp() {
-        const url = `https://wa.me/5518996505452&text=${encodeURIComponent(
+        const url = `https://api.whatsapp.com/send/?phone=55${number}&text=${encodeURIComponent(
             textoPassagem
         )}`
 
@@ -197,7 +197,7 @@ export default function Destiny({
             quantidadeAdultos,
         }
 
-        const linkWhatsapp = `https://api.whatsapp.com/send?phone=+55${number}&text=Nome:${encodeURIComponent(
+        const linkWhatsapp = `https://api.whatsapp.com/send/?phone=55${number}&text=Nome:${encodeURIComponent(
             userName
         )}%0AE-mail:${encodeURIComponent(
             userEmail
@@ -233,7 +233,7 @@ export default function Destiny({
                     setGastos('')
                     sendWhatsapp()
 
-                    window.open(linkWhatsapp, '_blank')
+                    // window.open(linkWhatsapp, '_blank')
                 })
         } catch (error) {
             if (error instanceof yup.ValidationError) {
